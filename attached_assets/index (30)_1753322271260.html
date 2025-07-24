@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RetailStat Newsletters Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      background: #f5f6fa;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2c3e50;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      font-size: 2.1rem;
+      margin-bottom: 8px;
+      color: #2c3e50;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #3498db;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: color 0.16s;
+    }
+    .back-link:hover { color: #217dbb; text-decoration: underline; }
+    .newsletter-list {
+      margin-top: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(44,62,80,0.08);
+      padding: 28px 22px;
+    }
+    .newsletter-row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #eaeaea;
+      padding: 15px 0;
+      transition: background 0.08s;
+    }
+    .newsletter-row:last-child { border-bottom: none; }
+    .newsletter-row:hover { background: #f4f8fb; }
+    .newsletter-icon {
+      color: #3498db;
+      font-size: 1.3em;
+      margin-right: 18px;
+      min-width: 36px;
+      text-align: center;
+    }
+    .newsletter-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #2c3e50;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .newsletter-title:hover { color: #217dbb; }
+    .newsletter-date {
+      margin-left: auto;
+      color: #888;
+      font-size: 0.98em;
+      font-family: monospace;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem 0.3rem; }
+      .newsletter-list { padding: 12px 4px; }
+      .newsletter-row { padding: 8px 0; font-size: 1em; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <h1><i class="fas fa-newspaper"></i> RetailStat Newsletters</h1>
+    <div class="newsletter-list" id="newsletterList">
+      <!-- Newsletter links will be loaded here -->
+      <div style="text-align:center;color:#bbb;">Loading newsletters...</div>
+    </div>
+    <p style="margin-top:2em;font-size:0.96em;color:#888;">
+      <strong>Tip:</strong> Add new newsletters to the <code>/retailstat/</code> folder and refresh this page.<br>
+      Only public files (.html, .pdf) are auto-listed.
+    </p>
+  </div>
+  <script>
+    // List all newsletter files in /retailstat/ using GitHub API
+    const apiURL = "https://api.github.com/repos/CleanslateKickz/geojson/contents/retailstat";
+    const baseURL = "../retailstat/";
+
+    // Try to parse YYYY-MM-DD or Month-DD-YYYY from filename for friendly date
+    function parseNewsletterInfo(filename) {
+      // Remove extension
+      let name = filename.replace(/\.[^/.]+$/, "");
+      // Try: June-17-2025 → 2025-06-17
+      let match = name.match(/^([A-Za-z]+)-(\d{1,2})-(\d{4})/);
+      if (match) {
+        let [_, month, day, year] = match;
+        let months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        let mNum = months.findIndex(m => m.toLowerCase() === month.substr(0,3).toLowerCase());
+        let dateStr = (mNum >= 0) ? `${year}-${String(mNum+1).padStart(2,'0')}-${String(day).padStart(2,'0')}` : "";
+        return {
+          title: `Retail News & Views – ${month} ${day}, ${year}`,
+          date: dateStr
+        };
+      }
+      // Try: 2025-06-17
+      match = name.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (match) {
+        let [_, year, month, day] = match;
+        return {
+          title: `Retail News & Views – ${month}/${day}/${year}`,
+          date: `${year}-${month}-${day}`
+        };
+      }
+      // Fallback
+      return { title: filename, date: "" };
+    }
+
+    async function loadNewsletters() {
+      const list = document.getElementById("newsletterList");
+      try {
+        const resp = await fetch(apiURL);
+        if (!resp.ok) throw new Error("Failed to fetch file list");
+        const files = await resp.json();
+        // Only show .html, .pdf, .htm
+        let newsletters = files.filter(f => f.type === "file" && /\.(html?|pdf)$/i.test(f.name));
+        if (!newsletters.length) {
+          list.innerHTML = "<div style='color:#bbb;text-align:center;'>No newsletters found in /retailstat/.</div>";
+          return;
+        }
+        // Sort by date (descending if possible)
+        newsletters.sort((a, b) => {
+          let infoA = parseNewsletterInfo(a.name);
+          let infoB = parseNewsletterInfo(b.name);
+          return (infoA.date < infoB.date) ? 1 : (infoA.date > infoB.date) ? -1 : 0;
+        });
+        list.innerHTML = "";
+        newsletters.forEach(f => {
+          let info = parseNewsletterInfo(f.name);
+          let ext = f.name.split('.').pop().toLowerCase();
+          let icon = (ext === "pdf") ? "fa-file-pdf" : "fa-file-alt";
+          let label = info.title || f.name;
+          let date = info.date ? info.date : "";
+          list.innerHTML += `
+            <div class="newsletter-row">
+              <span class="newsletter-icon"><i class="fas ${icon}"></i></span>
+              <a class="newsletter-title" href="${f.name}" target="_blank">${label}</a>
+              <span class="newsletter-date">${date ? date : ""}</span>
+            </div>
+          `;
+        });
+      } catch (e) {
+        list.innerHTML = `<div style="color:#c00;text-align:center;">Error loading newsletters.<br>${e.message}</div>`;
+      }
+    }
+    loadNewsletters();
+  </script>
+</body>
+</html>

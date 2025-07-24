@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-folder-open"></i> File Management Hub</h1>
+            <p>Organized collection of articles, notes, and documents</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Search Section -->
+        <div class="search-container">
+            <input type="text" id="globalSearch" placeholder="Search across all files...">
+            <i class="fas fa-search search-icon"></i>
+            <div class="search-filters">
+                <select id="contentTypeFilter">
+                    <option value="all">All Files</option>
+                    <option value="html">HTML Files</option>
+                    <option value="pdf">PDF Files</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Navigation Cards -->
+        <div class="category-grid">
+            <div class="category-card" id="articlesCard">
+                <i class="fas fa-newspaper category-icon"></i>
+                <h3>Articles & News</h3>
+                <p>Latest news articles, reports, and industry updates</p>
+                <div class="file-count" id="articlesCount">Loading...</div>
+                <a href="articles/" class="category-link">Browse Articles <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="category-card" id="notesCard">
+                <i class="fas fa-sticky-note category-icon"></i>
+                <h3>Notes & Documentation</h3>
+                <p>Personal notes, documentation, and reference materials</p>
+                <div class="file-count" id="notesCount">Loading...</div>
+                <a href="notes/" class="category-link">Browse Notes <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Recent Files Section -->
+        <section class="recent-files-section">
+            <h2><i class="fas fa-clock"></i> Recent Files</h2>
+            <div class="files-list" id="recentFilesList">
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i> Loading recent files...
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Search Results -->
+        <section class="search-results-section" id="searchResultsSection" style="display: none;">
+            <h2><i class="fas fa-search"></i> Search Results</h2>
+            <div class="files-list" id="searchResultsList"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 File Management Hub. Powered by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+        </div>
+    </footer>
+
+    <script src="js/github-api.js"></script>
+    <script src="js/file-manager.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

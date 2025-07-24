@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles & News - File Management Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <h1><i class="fas fa-newspaper"></i> Articles & News</h1>
+            <p>Industry updates, news articles, and reports</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Search Section -->
+        <div class="search-container">
+            <input type="text" id="articleSearch" placeholder="Search articles...">
+            <i class="fas fa-search search-icon"></i>
+            <div class="search-filters">
+                <select id="sortOrder">
+                    <option value="date-desc">Newest First</option>
+                    <option value="date-asc">Oldest First</option>
+                    <option value="name-asc">Name A-Z</option>
+                    <option value="name-desc">Name Z-A</option>
+                </select>
+                <select id="fileTypeFilter">
+                    <option value="all">All Types</option>
+                    <option value="html">HTML</option>
+                    <option value="pdf">PDF</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- File Statistics -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <i class="fas fa-file-alt"></i>
+                <span class="stat-number" id="totalFiles">0</span>
+                <span class="stat-label">Total Files</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-file-pdf"></i>
+                <span class="stat-number" id="pdfFiles">0</span>
+                <span class="stat-label">PDF Files</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-code"></i>
+                <span class="stat-number" id="htmlFiles">0</span>
+                <span class="stat-label">HTML Files</span>
+            </div>
+        </div>
+
+        <!-- Articles List -->
+        <section class="files-section">
+            <div class="files-list" id="articlesList">
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i> Loading articles...
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Instructions -->
+        <div class="upload-instructions">
+            <h3><i class="fas fa-upload"></i> How to Add New Articles</h3>
+            <ol>
+                <li>Upload your PDF or HTML files to the <code>/articles/</code> folder in your repository</li>
+                <li>Commit and push your changes</li>
+                <li>Files will automatically appear here within a few minutes</li>
+            </ol>
+            <p><strong>Naming Convention:</strong> Use dates in your filenames (e.g., "2025-01-15-article-title.pdf") for automatic sorting</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 File Management Hub. Powered by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+        </div>
+    </footer>
+
+    <script src="../js/github-api.js"></script>
+    <script src="../js/file-manager.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileManager = new FileManager();
+            fileManager.initializeArticlesPage();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes & Documentation - File Management Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="../" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            <h1><i class="fas fa-sticky-note"></i> Notes & Documentation</h1>
+            <p>Personal notes, documentation, and reference materials</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Search Section -->
+        <div class="search-container">
+            <input type="text" id="notesSearch" placeholder="Search notes...">
+            <i class="fas fa-search search-icon"></i>
+            <div class="search-filters">
+                <select id="sortOrder">
+                    <option value="date-desc">Newest First</option>
+                    <option value="date-asc">Oldest First</option>
+                    <option value="name-asc">Name A-Z</option>
+                    <option value="name-desc">Name Z-A</option>
+                </select>
+                <select id="fileTypeFilter">
+                    <option value="all">All Types</option>
+                    <option value="html">HTML</option>
+                    <option value="pdf">PDF</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- File Statistics -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <i class="fas fa-file-alt"></i>
+                <span class="stat-number" id="totalFiles">0</span>
+                <span class="stat-label">Total Files</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-file-pdf"></i>
+                <span class="stat-number" id="pdfFiles">0</span>
+                <span class="stat-label">PDF Files</span>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-code"></i>
+                <span class="stat-number" id="htmlFiles">0</span>
+                <span class="stat-label">HTML Files</span>
+            </div>
+        </div>
+
+        <!-- Notes List -->
+        <section class="files-section">
+            <div class="files-list" id="notesList">
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i> Loading notes...
+                </div>
+            </div>
+        </section>
+
+        <!-- Organization Tips -->
+        <div class="upload-instructions">
+            <h3><i class="fas fa-lightbulb"></i> Organization Tips</h3>
+            <ul>
+                <li>Use descriptive filenames that include topics or categories</li>
+                <li>Include dates in filenames for chronological organization</li>
+                <li>Consider using prefixes like "meeting-", "research-", or "tutorial-"</li>
+                <li>Keep file sizes reasonable for faster loading</li>
+            </ul>
+            <p><strong>Supported formats:</strong> HTML and PDF files are automatically indexed and displayed</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 File Management Hub. Powered by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+        </div>
+    </footer>
+
+    <script src="../js/github-api.js"></script>
+    <script src="../js/file-manager.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileManager = new FileManager();
+            fileManager.initializeNotesPage();
+        });
+    </script>
+</body>
+</html>
