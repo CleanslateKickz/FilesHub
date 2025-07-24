@@ -18,7 +18,9 @@ class FileManager {
                 return [];
             }
             
-            // Filter for supported file types
+            let allFiles = [];
+            
+            // Process files in current folder
             const files = contents.filter(item => {
                 return item.type === 'file' && 
                        this.supportedExtensions.some(ext => 
@@ -26,8 +28,17 @@ class FileManager {
                        );
             });
             
-            // Process and enhance file information
-            return files.map(file => this.processFileInfo(file, folderName));
+            allFiles.push(...files.map(file => this.processFileInfo(file, folderName)));
+            
+            // Process subfolders recursively
+            const subfolders = contents.filter(item => item.type === 'dir');
+            for (const subfolder of subfolders) {
+                const subfolderPath = `${folderName}/${subfolder.name}`;
+                const subfolderFiles = await this.getFilesFromFolder(subfolderPath);
+                allFiles.push(...subfolderFiles);
+            }
+            
+            return allFiles;
             
         } catch (error) {
             console.error(`Error fetching files from ${folderName}:`, error);
@@ -51,6 +62,7 @@ class FileManager {
             date: dateInfo.date,
             parsedDate: dateInfo.parsedDate,
             folder: folderName,
+            subfolder: folderName.includes('/') ? folderName.split('/').slice(1).join('/') : null,
             sha: file.sha,
             lastModified: file.updated_at || file.created_at,
             rawFile: file
@@ -395,6 +407,7 @@ class FileManager {
                     <div class="file-name">${file.displayName}</div>
                     <div class="file-meta">
                         <span class="file-type"><i class="fas fa-tag"></i> ${file.type.toUpperCase()}</span>
+                        ${file.subfolder ? `<span class="file-location"><i class="fas fa-folder"></i> ${file.subfolder}</span>` : ''}
                         ${file.date ? `<span class="file-date"><i class="fas fa-calendar"></i> ${this.formatDate(file.date)}</span>` : ''}
                         ${file.size ? `<span class="file-size"><i class="fas fa-hdd"></i> ${this.formatFileSize(file.size)}</span>` : ''}
                     </div>
