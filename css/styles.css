@@ -56,6 +56,37 @@ header p {
     opacity: 0.9;
 }
 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-text {
+    flex: 1;
+}
+
+.replit-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.replit-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.replit-logo {
+    height: 32px;
+    width: auto;
+}
+
 .back-link {
     display: inline-flex;
     align-items: center;
@@ -453,6 +484,16 @@ footer a:hover {
 
     header h1 {
         font-size: 2rem;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .replit-link {
+        align-self: flex-end;
     }
 
     .category-grid {
