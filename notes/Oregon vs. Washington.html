@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Real Estate Ownership: Oregon vs. Washington</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .section-divider {
+            border-top: 3px solid #e5e7eb;
+            margin: 2rem 0;
+        }
+        .tax-comparison-table {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .pro-con-card {
+            transition: transform 0.2s ease-in-out;
+        }
+        .pro-con-card:hover {
+            transform: translateY(-2px);
+        }
+        .chart-container {
+            height: 400px;
+        }
+        @media print {
+            body { print-color-adjust: exact; }
+            .no-print { display: none; }
+        }
+    </style>
+    </head>
+    <body class="bg-gray-50">
+        <!-- Header -->
+        <header class="gradient-bg text-white py-12">
+            <div class="max-w-6xl mx-auto px-6">
+                <h1 class="text-4xl font-bold mb-4">Commercial Real Estate Ownership</h1>
+                <h2 class="text-2xl font-light mb-6">Oregon vs. Washington: A Comprehensive Tax & Regulatory Comparison</h2>
+                <p class="text-lg opacity-90 max-w-4xl">A detailed analysis of the financial and regulatory implications for commercial real estate owners considering investment opportunities across state lines. This guide provides actionable insights based on current tax structures, market conditions, and regulatory environments as of 2024-2025.</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-6xl mx-auto px-6 py-8">
+
+            <!-- Executive Overview -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-chart-line text-blue-600 mr-3"></i>
+                    Executive Overview
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-700">Key Findings</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>Washington offers significant income tax advantages with no state personal income tax</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-1 text-sm"></i>Oregon's Maximum Assessed Value (MAV) system provides property tax stability</li>
+                            <li class="flex items-start"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2 mt-1 text-sm"></i>Washington's REET significantly higher than Oregon's minimal transfer taxes</li>
+                            <li class="flex items-start"><i class="fas fa-info-circle text-blue-500 mr-2 mt-1 text-sm"></i>Capital gains treatment differs substantially between states</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-700">Strategic Considerations</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start"><i class="fas fa-lightbulb text-yellow-500 mr-2 mt-1 text-sm"></i>Hold period strategies impact tax efficiency</li>
+                            <li class="flex items-start"><i class="fas fa-lightbulb text-yellow-500 mr-2 mt-1 text-sm"></i>Entity structure selection critical for optimization</li>
+                            <li class="flex items-start"><i class="fas fa-lightbulb text-yellow-500 mr-2 mt-1 text-sm"></i>Cross-border planning opportunities exist</li>
+                            <li class="flex items-start"><i class="fas fa-lightbulb text-yellow-500 mr-2 mt-1 text-sm"></i>Market dynamics favor different property types</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Detailed Tax Comparison Table -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-table text-blue-600 mr-3"></i>
+                    Comprehensive Tax Comparison
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full tax-comparison-table">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="text-left py-4 px-6 font-semibold text-gray-700 border-b">Tax Category</th>
+                                <th class="text-left py-4 px-6 font-semibold text-gray-700 border-b">Oregon</th>
+                                <th class="text-left py-4 px-6 font-semibold text-gray-700 border-b">Washington</th>
+                                <th class="text-left py-4 px-6 font-semibold text-gray-700 border-b">Advantage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium text-gray-800">Property Tax Rates</td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>Multnomah County: ~0.99%</div>
+                                        <div class="text-sm text-green-600">✓ MAV 3% annual cap</div>
+                                        <div class="text-sm text-green-600">✓ Measure 50 protection</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>Clark County: ~0.86%</div>
+                                        <div class="text-sm text-yellow-600">⚠ No growth caps</div>
+                                        <div class="text-sm">Market-based assessment</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Oregon (Long-term)</span>
+                                </td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium text-gray-800">State Income Tax</td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>Individual: 4.75% - 9.9%</div>
+                                        <div>Corporate: 6.6% - 7.6%</div>
+                                        <div class="text-sm text-red-600">✗ Applies to rental income</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div class="text-green-600 font-medium">No State Income Tax</div>
+                                        <div class="text-sm text-green-600">✓ Significant savings</div>
+                                        <div class="text-sm">B&O Tax: 0.484% service/other</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Washington</span>
+                                </td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium text-gray-800">Capital Gains Tax</td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>Taxed as ordinary income</div>
+                                        <div>Up to 9.9% state rate</div>
+                                        <div class="text-sm text-red-600">✗ No preferential treatment</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div class="text-green-600 font-medium">Real Estate Exempt</div>
+                                        <div>7% on other long-term gains</div>
+                                        <div class="text-sm text-green-600">✓ $270,000 deduction (2024)</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Washington</span>
+                                </td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium text-gray-800">Transfer Taxes</td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>Statewide: None</div>
+                                        <div>Washington County: $1/$1,000</div>
+                                        <div class="text-sm text-green-600">✓ Minimal cost</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>REET: 1.1% - 3.0% (graduated)</div>
+                                        <div>Plus local REET varies</div>
+                                        <div class="text-sm text-red-600">✗ Significant transaction cost</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Oregon</span>
+                                </td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium text-gray-800">Estate Tax</td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>$1M exemption</div>
+                                        <div>Rates: 0.8% - 16%</div>
+                                        <div class="text-sm text-red-600">✗ Lower exemption</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6 text-gray-600">
+                                    <div class="space-y-1">
+                                        <div>$3M exemption (2025)</div>
+                                        <div>Rates: 0.8% - 35%</div>
+                                        <div class="text-sm text-green-600">✓ Higher exemption</div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Washington</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Visual Tax Impact Analysis -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-chart-bar text-blue-600 mr-3"></i>
+                    Tax Impact Analysis: Sample Scenarios
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Annual Tax Burden Comparison</h3>
+                        <div class="chart-container">
+                            <canvas id="taxBurdenChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Transaction Cost Analysis</h3>
+                        <div class="chart-container">
+                            <canvas id="transactionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Oregon Advantages -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-thumbs-up text-green-600 mr-3"></i>
+                    Advantages of Oregon Commercial Real Estate
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="pro-con-card bg-green-50 border border-green-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-3 flex items-center">
+                            <i class="fas fa-shield-alt mr-2"></i>
+                            Property Tax Stability
+                        </h3>
+                        <ul class="space-y-2 text-green-700">
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Maximum Assessed Value (MAV) caps annual increases at 3%</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Measure 50 provides long-term tax predictability</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Protection against rapid market appreciation impacts</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Significant advantage for long-term hold strategies</li>
+                        </ul>
+                    </div>
+                    <div class="pro-con-card bg-green-50 border border-green-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-3 flex items-center">
+                            <i class="fas fa-coins mr-2"></i>
+                            Low Transaction Costs
+                        </h3>
+                        <ul class="space-y-2 text-green-700">
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>No statewide real estate transfer tax</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Only Washington County charges minimal transfer tax ($1/$1,000)</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Lower barriers to frequent transactions</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Beneficial for value-add and flip strategies</li>
+                        </ul>
+                    </div>
+                    <div class="pro-con-card bg-green-50 border border-green-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-3 flex items-center">
+                            <i class="fas fa-building mr-2"></i>
+                            Market Familiarity
+                        </h3>
+                        <ul class="space-y-2 text-green-700">
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Established local market knowledge</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Existing professional networks and relationships</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Known regulatory environment and processes</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Reduced due diligence and learning curve costs</li>
+                        </ul>
+                    </div>
+                    <div class="pro-con-card bg-green-50 border border-green-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-3 flex items-center">
+                            <i class="fas fa-gavel mr-2"></i>
+                            Regulatory Advantages
+                        </h3>
+                        <ul class="space-y-2 text-green-700">
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Established depreciation and cost segregation practices</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Predictable assessment and appeal processes</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>Well-developed 1031 exchange infrastructure</li>
+                            <li class="flex items-start"><i class="fas fa-check text-green-600 mr-2 mt-1 text-sm"></i>No sales tax on most commercial real estate services</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Washington Advantages -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-thumbs-up text-blue-600 mr-3"></i>
+                    Advantages of Washington Commercial Real Estate
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="pro-con-card bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+                            <i class="fas fa-hand-holding-usd mr-2"></i>
+                            Income Tax Advantages
+                        </h3>
+                        <ul class="space-y-2 text-blue-700">
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>No state personal income tax</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Significant savings on rental income (up to 9.9% saved vs. Oregon)</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>No tax on passive investment income</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>B&O tax only on gross receipts, not net income</li>
+                        </ul>
+                    </div>
+                    <div class="pro-con-card bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            Capital Gains Benefits
+                        </h3>
+                        <ul class="space-y-2 text-blue-700">
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Real estate sales completely exempt from state capital gains tax</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Up to 9.9% savings on appreciation gains vs. Oregon</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Favorable for value-appreciation strategies</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>No depreciation recapture at state level</li>
+                        </ul>
+                    </div>
+                    <div class="pro-con-card bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+                            <i class="fas fa-university mr-2"></i>
+                            Estate Planning Benefits
+                        </h3>
+                        <ul class="space-y-2 text-blue-700">
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Higher estate tax exemption ($3M vs. $1M in Oregon)</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Better wealth preservation for high-net-worth individuals</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>More favorable for family wealth transfer strategies</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Potential residency planning opportunities</li>
+                        </ul>
+                    </div>
+                    <div class="pro-con-card bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+                            <i class="fas fa-map-marked-alt mr-2"></i>
+                            Market Opportunities
+                        </h3>
+                        <ul class="space-y-2 text-blue-700">
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Strong economic growth in tech and aerospace sectors</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Geographic diversification benefits</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Access to Seattle metropolitan market</li>
+                            <li class="flex items-start"><i class="fas fa-check text-blue-600 mr-2 mt-1 text-sm"></i>Cross-border investment opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Disadvantages and Challenges -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-exclamation-triangle text-yellow-600 mr-3"></i>
+                    Key Challenges and Disadvantages
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-4 flex items-center">
+                            <i class="fas fa-times-circle mr-2"></i>
+                            Oregon Challenges
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-red-800 mb-2">High Income Tax Burden</h4>
+                                <p class="text-red-700 text-sm">State income tax up to 9.9% significantly reduces net cash flow from rental properties</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-red-800 mb-2">Capital Gains Treatment</h4>
+                                <p class="text-red-700 text-sm">No preferential capital gains treatment - taxed as ordinary income at full rates</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-red-800 mb-2">Lower Estate Tax Exemption</h4>
+                                <p class="text-red-700 text-sm">$1M exemption vs. $3M in Washington creates estate planning challenges</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-red-700 mb-4 flex items-center">
+                            <i class="fas fa-times-circle mr-2"></i>
+                            Washington Challenges
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-red-800 mb-2">High Transfer Taxes</h4>
+                                <p class="text-red-700 text-sm">REET from 1.1% to 3% creates substantial transaction costs, especially for frequent trading</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-red-800 mb-2">Property Tax Volatility</h4>
+                                <p class="text-red-700 text-sm">No growth caps mean property taxes can increase significantly with market appreciation</p>
+                            </div>
+                            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-red-800 mb-2">Market Unfamiliarity</h4>
+                                <p class="text-red-700 text-sm">Learning curve for new market, regulations, and building professional networks</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Strategic Recommendations -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-lightbulb text-yellow-600 mr-3"></i>
+                    Strategic Recommendations
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+                            <i class="fas fa-clock mr-2"></i>
+                            Hold Period Strategy
+                        </h3>
+                        <ul class="space-y-2 text-blue-700 text-sm">
+                            <li><strong>Long-term holds (5+ years):</strong> Oregon's MAV system provides excellent tax stability</li>
+                            <li><strong>Short-term flips:</strong> Washington's lower transaction costs may be advantageous</li>
+                            <li><strong>Value-add plays:</strong> Consider Washington for high-appreciation potential</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-green-800 mb-3 flex items-center">
+                            <i class="fas fa-sitemap mr-2"></i>
+                            Entity Structure
+                        </h3>
+                        <ul class="space-y-2 text-green-700 text-sm">
+                            <li><strong>Washington properties:</strong> Consider single-member LLC for income tax benefits</li>
+                            <li><strong>Oregon properties:</strong> Evaluate S-Corp election for active management</li>
+                            <li><strong>Multi-state portfolio:</strong> Delaware holding company structure</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-purple-800 mb-3 flex items-center">
+                            <i class="fas fa-map mr-2"></i>
+                            Geographic Diversification
+                        </h3>
+                        <ul class="space-y-2 text-purple-700 text-sm">
+                            <li><strong>Risk mitigation:</strong> Spread regulatory and market risk across states</li>
+                            <li><strong>Tax optimization:</strong> Utilize each state's tax advantages</li>
+                            <li><strong>Market cycles:</strong> Benefit from different economic cycles</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Additional Considerations -->
+            <section class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-cogs text-gray-600 mr-3"></i>
+                    Additional Considerations
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-700">Regulatory Environment</h3>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h4 class="font-semibold text-gray-800">Oregon</h4>
+                                <p class="text-gray-600 text-sm">Established landlord-tenant laws, rent control in some areas, strong tenant protections</p>
+                            </div>
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h4 class="font-semibold text-gray-800">Washington</h4>
+                                <p class="text-gray-600 text-sm">Generally more landlord-friendly, varying local regulations, emerging rent stabilization policies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold text-gray-700">Market Trends</h3>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-yellow-500 pl-4">
+                                <h4 class="font-semibold text-gray-800">Economic Growth</h4>
+                                <p class="text-gray-600 text-sm">Washington's tech sector driving strong commercial demand, Oregon's diversified economy provides stability</p>
+                            </div>
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <h4 class="font-semibold text-gray-800">Interest Rate Sensitivity</h4>
+                                <p class="text-gray-600 text-sm">Both markets affected by federal monetary policy, but different sensitivity levels by property type</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Decision Framework -->
+            <section class="bg-gradient-to-r from-gray-100 to-gray-200 rounded-lg p-8 mb-8">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i class="fas fa-decision-tree text-gray-600 mr-3"></i>
+                    Decision Framework
+                </h2>
+                <div class="bg-white rounded-lg p-6 shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Choose Oregon When:</h3>
+                    <ul class="grid md:grid-cols-2 gap-3 mb-6">
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-green-600 mr-2 mt-1"></i>Long-term hold strategy (5+ years)</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-green-600 mr-2 mt-1"></i>Frequent property transactions planned</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-green-600 mr-2 mt-1"></i>Property tax stability is priority</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-green-600 mr-2 mt-1"></i>Leveraging existing market knowledge</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Choose Washington When:</h3>
+                    <ul class="grid md:grid-cols-2 gap-3">
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>High rental income generation expected</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>Significant appreciation potential</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>Estate planning considerations important</li>
+                        <li class="flex items-start"><i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>Geographic diversification desired</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Important Disclaimers</h3>
+                        <p class="text-gray-300 text-sm">This analysis is based on current tax laws and regulations as of December 2024. Tax laws are subject to change, and individual circumstances may vary. Consult with qualified tax and legal professionals before making investment decisions.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Data Sources</h3>
+                        <ul class="text-gray-300 text-sm space-y-1">
+                            <li>• Oregon Department of Revenue</li>
+                            <li>• Washington Department of Revenue</li>
+                            <li>• Multnomah County Assessor</li>
+                            <li>• Clark County Assessor</li>
+                            <li>• Tax Foundation</li>
+                            <li>• Local government websites</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Professional Consultation</h3>
+                        <p class="text-gray-300 text-sm">Consider consulting with:</p>
+                        <ul class="text-gray-300 text-sm space-y-1 mt-2">
+                            <li>• Commercial real estate attorneys</li>
+                            <li>• Tax professionals specializing in real estate</li>
+                            <li>• Estate planning attorneys</li>
+                            <li>• Commercial real estate brokers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Tax Burden Comparison Chart
+            const taxCtx = document.getElementById('taxBurdenChart').getContext('2d');
+            new Chart(taxCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['$1M Property\n$100k Rental Income', '$2M Property\n$200k Rental Income', '$5M Property\n$500k Rental Income'],
+                    datasets: [{
+                        label: 'Oregon Annual Tax Burden',
+                        data: [45000, 95000, 245000],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Washington Annual Tax Burden',
+                        data: [28600, 57200, 143000],
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderColor: 'rgba(16, 185, 129, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Annual Tax Burden Comparison (Property Tax + Income Tax on Rental Income)'
+                        },
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value/1000) + 'k';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Transaction Cost Analysis Chart
+            const transactionCtx = document.getElementById('transactionChart').getContext('2d');
+            new Chart(transactionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Oregon Transfer Tax', 'Washington REET (1.5% avg)', 'Other Costs'],
+                    datasets: [{
+                        label: 'Transaction Costs on $2M Sale',
+                        data: [2000, 30000, 25000],
+                        backgroundColor: [
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(107, 114, 128, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(34, 197, 94, 1)',
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(107, 114, 128, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Transaction Costs Comparison: $2M Property Sale'
+                        },
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': $' + context.parsed.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
