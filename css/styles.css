@@ -333,6 +333,15 @@ header p {
     gap: 4px;
 }
 
+.file-size {
+    color: #888;
+}
+
+.file-location {
+    color: #666;
+    font-weight: 500;
+}
+
 .external-link-icon {
     margin-left: auto;
     color: var(--text-muted);
@@ -441,36 +450,36 @@ footer a:hover {
     .container {
         padding: 0 15px;
     }
-    
+
     header h1 {
         font-size: 2rem;
     }
-    
+
     .category-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .stats-section {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
-    
+
     .search-filters {
         flex-direction: column;
     }
-    
+
     .search-filters select {
         width: 100%;
     }
-    
+
     .file-meta {
         flex-direction: column;
         gap: 0.3rem;
     }
-    
+
     .file-item {
         padding: 1rem;
     }
-    
+
     .upload-instructions {
         padding: 1.5rem;
     }
@@ -480,19 +489,19 @@ footer a:hover {
     header {
         padding: 1.5rem 0;
     }
-    
+
     header h1 {
         font-size: 1.8rem;
     }
-    
+
     .category-card {
         padding: 1.5rem;
     }
-    
+
     .stat-card {
         padding: 1rem;
     }
-    
+
     .stat-number {
         font-size: 2rem;
     }
@@ -561,15 +570,15 @@ footer a:hover {
     header, footer, .search-container, .upload-instructions {
         display: none;
     }
-    
+
     .file-item {
         break-inside: avoid;
     }
-    
+
     body {
         background: white;
     }
-    
+
     .files-list, .category-card {
         box-shadow: none;
         border: 1px solid #ccc;
