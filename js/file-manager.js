@@ -51,13 +51,16 @@ class FileManager {
         const fileType = this.getFileType(extension);
         const dateInfo = this.extractDateFromFilename(file.name);
         
+        // Generate GitHub Pages URL instead of raw URL
+        const githubPagesUrl = this.generateGitHubPagesUrl(folderName, file.name);
+        
         return {
             name: file.name,
             displayName: this.createDisplayName(file.name),
             size: file.size,
             type: fileType,
             extension: extension,
-            url: file.download_url,
+            url: githubPagesUrl,
             htmlUrl: file.html_url,
             date: dateInfo.date,
             parsedDate: dateInfo.parsedDate,
@@ -162,6 +165,18 @@ class FileManager {
         };
         
         return months[monthName.toLowerCase()] || null;
+    }
+    
+    generateGitHubPagesUrl(folderName, fileName) {
+        // Get the GitHub Pages base URL from the GitHub API instance
+        const owner = this.githubAPI.owner;
+        const repo = this.githubAPI.repo;
+        
+        // Construct GitHub Pages URL
+        const baseUrl = `https://${owner}.github.io/${repo}`;
+        const filePath = `${folderName}/${fileName}`;
+        
+        return `${baseUrl}/${filePath}`;
     }
     
     async getFileCount(folderName) {
