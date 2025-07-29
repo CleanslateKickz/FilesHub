@@ -1,146 +1,103 @@
 class GitHubAPI {
     constructor() {
-        // Get repository info from current URL or environment
-        this.owner = this.getRepoOwner();
-        this.repo = this.getRepoName();
-        this.baseUrl = 'https://api.github.com';
-        this.token = this.getAuthToken();
-        
-        // Cache for API responses to reduce rate limiting
+        // For local development in Replit, we'll use a mock API
+        this.owner = 'local';
+        this.repo = 'FilesHub';
+        this.baseUrl = window.location.origin;
+
+        // Cache for responses
         this.cache = new Map();
         this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
     }
-    
-    getRepoOwner() {
-        // Try to get from URL (for GitHub Pages)
-        const hostname = window.location.hostname;
-        if (hostname.includes('.github.io')) {
-            return hostname.split('.')[0];
-        }
-        
-        // For local development, use environment variable or default
-        // Replace 'your-github-username' with your actual GitHub username
-        return window.GITHUB_OWNER || 'cleanslatekickz';
-    }
-    
-    getRepoName() {
-        // Try to get from URL path (for GitHub Pages)
-        const pathname = window.location.pathname;
-        const pathParts = pathname.split('/').filter(part => part);
-        
-        if (pathParts.length > 0 && !pathParts[0].includes('.')) {
-            return pathParts[0];
-        }
-        
-        // Fallback to environment or default
-        // Replace 'your-repository-name' with your actual repository name
-        return window.GITHUB_REPO || 'FilesHub';
-    }
-    
-    getAuthToken() {
-        // Get token from environment variables if available
-        return window.GITHUB_TOKEN || null;
-    }
-    
-    getHeaders() {
-        const headers = {
-            'Accept': 'application/vnd.github.v3+json',
-            'User-Agent': 'File-Management-Hub/1.0'
-        };
-        
-        if (this.token) {
-            headers['Authorization'] = `token ${this.token}`;
-        }
-        
-        return headers;
-    }
-    
-    getCacheKey(url) {
-        return `${this.owner}/${this.repo}:${url}`;
-    }
-    
-    isValidCache(cacheData) {
-        return cacheData && (Date.now() - cacheData.timestamp) < this.cacheTimeout;
-    }
-    
-    async makeRequest(url, options = {}) {
-        const cacheKey = this.getCacheKey(url);
-        const cachedData = this.cache.get(cacheKey);
-        
-        if (this.isValidCache(cachedData)) {
-            return cachedData.data;
-        }
-        
-        try {
-            const response = await fetch(url, {
-                ...options,
-                headers: {
-                    ...this.getHeaders(),
-                    ...options.headers
-                }
-            });
-            
-            if (!response.ok) {
-                throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-            }
-            
-            const data = await response.json();
-            
-            // Cache the response
-            this.cache.set(cacheKey, {
-                data: data,
-                timestamp: Date.now()
-            });
-            
-            return data;
-            
-        } catch (error) {
-            console.error('GitHub API request failed:', error);
-            
-            // Return cached data if available, even if expired
-            if (cachedData) {
-                console.warn('Using expired cache data due to API error');
-                return cachedData.data;
-            }
-            
-            throw error;
-        }
-    }
-    
+
     async getRepoContents(path = '') {
-        const url = `${this.baseUrl}/repos/${this.owner}/${this.repo}/contents/${path}`;
-        return await this.makeRequest(url);
+        // For local development, return mock data based on actual file structure
+        const mockStructure = {
+            '': [
+                { name: 'articles', type: 'dir', path: 'articles' },
+                { name: 'notes', type: 'dir', path: 'notes' },
+                { name: 'index.html', type: 'file', path: 'index.html' }
+            ],
+            'articles': [
+                {
+                    name: '2025-01-24-sample-article.html',
+                    type: 'file',
+                    path: 'articles/2025-01-24-sample-article.html',
+                    size: 2048,
+                    html_url: `${this.baseUrl}/articles/2025-01-24-sample-article.html`,
+                    sha: 'abc123',
+                    updated_at: '2025-01-24T00:00:00Z'
+                },
+                {
+                    name: 'index.html',
+                    type: 'file',
+                    path: 'articles/index.html',
+                    size: 1024,
+                    html_url: `${this.baseUrl}/articles/index.html`,
+                    sha: 'def456',
+                    updated_at: '2025-01-24T00:00:00Z'
+                }
+            ],
+            'notes': [
+                {
+                    name: '2025-01-24-setup-guide.html',
+                    type: 'file',
+                    path: 'notes/2025-01-24-setup-guide.html',
+                    size: 3072,
+                    html_url: `${this.baseUrl}/notes/2025-01-24-setup-guide.html`,
+                    sha: 'ghi789',
+                    updated_at: '2025-01-24T00:00:00Z'
+                },
+                {
+                    name: 'index.html',
+                    type: 'file',
+                    path: 'notes/index.html',
+                    size: 1024,
+                    html_url: `${this.baseUrl}/notes/index.html`,
+                    sha: 'jkl012',
+                    updated_at: '2025-01-24T00:00:00Z'
+                }
+            ]
+        };
+
+        return mockStructure[path] || [];
     }
-    
+
     async getRepoInfo() {
-        const url = `${this.baseUrl}/repos/${this.owner}/${this.repo}`;
-        return await this.makeRequest(url);
+        return {
+            name: 'FilesHub',
+            full_name: 'local/FilesHub',
+            description: 'File Management Hub - Local Development',
+            html_url: this.baseUrl,
+            created_at: '2025-01-24T00:00:00Z',
+            updated_at: '2025-01-24T00:00:00Z'
+        };
     }
-    
+
     async getRecentCommits(perPage = 10) {
-        const url = `${this.baseUrl}/repos/${this.owner}/${this.repo}/commits?per_page=${perPage}`;
-        return await this.makeRequest(url);
-    }
-    
-    async getGitHubPagesInfo() {
-        const url = `${this.baseUrl}/repos/${this.owner}/${this.repo}/pages`;
-        try {
-            return await this.makeRequest(url);
-        } catch (error) {
-            // GitHub Pages endpoint might not be accessible
-            if (error.message.includes('404')) {
-                return null;
+        return [
+            {
+                sha: 'abc123',
+                commit: {
+                    message: 'Initial setup',
+                    author: {
+                        name: 'Local User',
+                        date: '2025-01-24T00:00:00Z'
+                    }
+                }
             }
-            throw error;
-        }
+        ];
     }
-    
+
+    async getGitHubPagesInfo() {
+        return null; // Not applicable for local development
+    }
+
     async getFileContent(path) {
         try {
-            const contents = await this.getRepoContents(path);
-            if (contents.content) {
-                // Decode base64 content
-                return atob(contents.content.replace(/\s/g, ''));
+            const response = await fetch(`${this.baseUrl}/${path}`);
+            if (response.ok) {
+                return await response.text();
             }
             return null;
         } catch (error) {
@@ -148,50 +105,31 @@ class GitHubAPI {
             return null;
         }
     }
-    
+
     async searchFiles(query, path = '') {
-        try {
-            const url = `${this.baseUrl}/search/code?q=${encodeURIComponent(query)}+repo:${this.owner}/${this.repo}${path ? `+path:${path}` : ''}`;
-            return await this.makeRequest(url);
-        } catch (error) {
-            console.error('Search failed:', error);
-            return { items: [] };
-        }
+        // Simple mock search - in a real implementation this would search file contents
+        return { items: [] };
     }
-    
+
     async getRateLimitStatus() {
-        const url = `${this.baseUrl}/rate_limit`;
-        try {
-            return await this.makeRequest(url);
-        } catch (error) {
-            console.warn('Could not get rate limit status:', error);
-            return null;
-        }
+        return {
+            rate: {
+                limit: 5000,
+                remaining: 5000,
+                reset: Date.now() / 1000 + 3600
+            }
+        };
     }
-    
-    // Utility method to clear cache
+
     clearCache() {
         this.cache.clear();
     }
-    
-    // Utility method to get cache statistics
+
     getCacheStats() {
-        const now = Date.now();
-        let validEntries = 0;
-        let expiredEntries = 0;
-        
-        this.cache.forEach(entry => {
-            if ((now - entry.timestamp) < this.cacheTimeout) {
-                validEntries++;
-            } else {
-                expiredEntries++;
-            }
-        });
-        
         return {
             totalEntries: this.cache.size,
-            validEntries,
-            expiredEntries
+            validEntries: this.cache.size,
+            expiredEntries: 0
         };
     }
 }
