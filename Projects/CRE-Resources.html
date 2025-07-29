@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Real Estate Resources</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .alert-bg {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+        .success-bg {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+        }
+        .warning-bg {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        }
+        .shadow-custom {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .print-break {
+            page-break-inside: avoid;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.active {
+            max-height: 1000px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-8 px-4">
+        <div class="container mx-auto">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Commercial Real Estate Resources</h1>
+            <p class="text-xl opacity-90">Essential guides for Oregon property owners and investors</p>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex flex-wrap border-b border-gray-200 mb-8">
+            <button class="tab-button active px-6 py-3 font-medium rounded-t-lg mr-2 mb-2" onclick="openTab('sb426')">
+                <i class="fas fa-exclamation-triangle mr-2"></i>SB 426 Alert
+            </button>
+            <button class="tab-button px-6 py-3 font-medium rounded-t-lg mr-2 mb-2" onclick="openTab('exchanges')">
+                <i class="fas fa-exchange-alt mr-2"></i>1031 Exchanges
+            </button>
+            <button class="tab-button px-6 py-3 font-medium rounded-t-lg mb-2" onclick="openTab('bill')">
+                <i class="fas fa-file-invoice-dollar mr-2"></i>Big Beautiful Bill
+            </button>
+        </div>
+
+        <!-- SB 426 Tab Content -->
+        <div id="sb426" class="tab-content active">
+            <!-- Header Alert -->
+            <div class="alert-bg text-white p-6 shadow-custom mb-8">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle text-3xl mr-4"></i>
+                    <div>
+                        <h1 class="text-2xl font-bold mb-2">URGENT: New Oregon Law Creates Massive Liability for Property Owners</h1>
+                        <p class="text-lg opacity-90">Senate Bill 426 - Effective January 1, 2026 - Could Cost Property Owners Thousands in Unpaid Contractor Wages</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Executive Summary -->
+                <div class="bg-white rounded-lg shadow-custom p-6 print-break">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-clipboard-list text-3xl text-blue-600 mr-4"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">Executive Summary</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-calendar-alt text-red-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-semibold text-lg">Effective Date</h3>
+                                    <p>January 1, 2026 - Less than 12 months away</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-gavel text-red-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-semibold text-lg">Liability Type</h3>
+                                    <p>Joint and several liability - You pay even if contractor was paid in full</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-ban text-red-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h3 class="font-semibold text-lg">No Escape Clause</h3>
+                                    <p>Cannot be waived, transferred, or indemnified by contract</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-red-50 border-l-4 border-red-500 p-4">
+                                <h3 class="font-semibold text-lg text-red-800 mb-2">Potential Costs Include:</h3>
+                                <ul class="text-red-700 space-y-1">
+                                    <li>• Unpaid wages + penalties (up to 30 days wages per worker)</li>
+                                    <li>• Attorney fees and court costs</li>
+                                    <li>• Interest and damages</li>
+                                    <li>• Fringe benefit contributions</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4">
+                                <h3 class="font-semibold text-lg text-green-800 mb-2">Exemptions:</h3>
+                                <ul class="text-green-700 space-y-1">
+                                    <li>• Owner's principal residence</li>
+                                    <li>• Projects with 5 or fewer units</li>
+                                    <li>• Union workers with wage recovery mechanisms</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Impact Analysis -->
+                <div class="bg-white rounded-lg shadow-custom p-6 print-break">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-chart-line text-3xl text-red-600 mr-4"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">Financial Impact Analysis</h2>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-red-50 rounded-lg p-6 text-center">
+                            <i class="fas fa-dollar-sign text-4xl text-red-600 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-red-800 mb-2">Immediate Costs</h3>
+                            <p class="text-red-700">Up to 30 days wages per affected worker, plus attorney fees, interest, and damages</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-lg p-6 text-center">
+                            <i class="fas fa-home text-4xl text-orange-600 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-orange-800 mb-2">Property Value Impact</h3>
+                            <p class="text-orange-700">Increased liability exposure reduces property attractiveness to buyers and lenders</p>
+                        </div>
+                        <div class="bg-yellow-50 rounded-lg p-6 text-center">
+                            <i class="fas fa-shield-alt text-4xl text-yellow-600 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-yellow-800 mb-2">Insurance Gaps</h3>
+                            <p class="text-yellow-700">Most standard policies don't cover wage theft liability - new coverage needed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cold Calling Talking Points -->
+                <div class="bg-white rounded-lg shadow-custom p-6 print-break">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-phone text-3xl text-blue-600 mr-4"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">Cold Calling Talking Points</h2>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-blue-500 pl-6">
+                            <h3 class="text-xl font-semibold text-blue-800 mb-3">Opening Hook</h3>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <p class="italic">"Hi [Name], I'm calling because there's a new Oregon law taking effect January 1st that could cost property owners tens of thousands of dollars in unexpected liability. Do you have 2 minutes for me to explain how this might affect your [property type] at [address]?"</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-green-500 pl-6">
+                            <h3 class="text-xl font-semibold text-green-800 mb-3">Value Proposition</h3>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <p class="italic">"Senate Bill 426 makes property owners personally liable for unpaid wages if contractors don't pay their subcontractors - even if you paid the contractor in full. This applies to most commercial properties and could significantly impact your property's value and marketability. Many of my clients are considering selling before this takes effect or getting updated valuations to understand their exposure."</p>
+                            </div>
+                        </div>
+
+                        <div class="border-l-4 border-yellow-500 pl-6">
+                            <h3 class="text-xl font-semibold text-yellow-800 mb-3">Urgency Creator</h3>
+                            <div class="bg-yellow-50 p-4 rounded-lg">
+                                <p class="italic">"The law takes effect in less than 12 months, and smart property owners are already taking action. Would you like to understand what this means for your specific situation and what options you have?"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Items for Property Owners -->
+                <div class="bg-white rounded-lg shadow-custom p-6 print-break">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-tasks text-3xl text-indigo-600 mr-4"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">Immediate Action Items for Property Owners</h2>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-red-800 mb-4">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>Urgent (Next 30 Days)
+                            </h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Get property valuation analysis</p>
+                                        <p class="text-sm text-gray-600">Understand current value before law takes effect</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Review existing construction contracts</p>
+                                        <p class="text-sm text-gray-600">Identify potential liability exposure</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Consult with legal counsel</p>
+                                        <p class="text-sm text-gray-600">Understand specific implications for your properties</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Contact insurance agent</p>
+                                        <p class="text-sm text-gray-600">Explore coverage options for wage theft liability</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold text-blue-800 mb-4">
+                                <i class="fas fa-calendar-alt mr-2"></i>Strategic (Next 90 Days)
+                            </h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Evaluate sale vs. hold decision</p>
+                                        <p class="text-sm text-gray-600">Compare sale proceeds to long-term liability exposure</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Implement compliance systems</p>
+                                        <p class="text-sm text-gray-600">If keeping property, establish wage monitoring protocols</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Update contractor vetting process</p>
+                                        <p class="text-sm text-gray-600">Establish stricter due diligence requirements</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Consider portfolio restructuring</p>
+                                        <p class="text-sm text-gray-600">Evaluate which properties to keep vs. sell</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1031 Exchanges Tab Content -->
+        <div id="exchanges" class="tab-content">
+            <div class="bg-white rounded-lg shadow-custom p-6 mb-8">
+                <div class="flex items-center mb-6">
+                    <i class="fas fa-exchange-alt text-3xl text-purple-600 mr-4"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">Strategic Guide: Oregon 1031 Exchanges</h2>
+                </div>
+                <p class="text-xl text-gray-700 mb-6">Why Property Owners Should Consider Tax-Free States</p>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Highlight Box -->
+                <div class="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-lg shadow-custom p-6">
+                    <h2 class="text-2xl font-bold mb-4">The Hidden Cost of "Just Holding" in Oregon</h2>
+                    <p class="text-lg">Your clients may be content with the status quo, but contentment often masks significant opportunity costs. While they're satisfied holding Oregon properties, they're essentially writing unnecessary checks to the state every year.</p>
+                </div>
+
+                <!-- Tax Example -->
+                <div class="bg-white rounded-lg shadow-custom p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">The Numbers Don't Lie</h3>
+                    <p class="font-semibold mb-4">For a typical $3M NNN property generating $180,000 in annual rent:</p>
+                    <ul class="space-y-2 mb-4">
+                        <li class="flex items-start">
+                            <span class="bg-green-500 text-white rounded-full px-3 py-1 mr-3">1</span>
+                            <span><strong>Oregon state income tax (9.9%):</strong> <span class="text-green-600 font-bold">~$17,820/year</span></span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-500 text-white rounded-full px-3 py-1 mr-3">2</span>
+                            <span><strong>Over 10 years:</strong> <span class="text-green-600 font-bold">$178,200</span> in unnecessary tax payments</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-500 text-white rounded-full px-3 py-1 mr-3">3</span>
+                            <span><strong>Over 20 years:</strong> <span class="text-green-600 font-bold">$356,400+</span> (not accounting for rent increases)</span>
+                        </li>
+                    </ul>
+                    <p class="text-red-600 font-bold">That's pure cash flow erosion with zero benefit to the investor.</p>
+                </div>
+
+                <!-- Accordion Section -->
+                <div class="space-y-4">
+                    <!-- Accordion Item 1 -->
+                    <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left" onclick="toggleAccordion(this)">
+                            <h3 class="text-xl font-bold text-gray-800">Why Exchange Out of Oregon: Long-Term Wealth Preservation</h3>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-6 pt-0 grid md:grid-cols-2 gap-6">
+                                <!-- Benefit Card 1 -->
+                                <div class="bg-blue-50 p-6 rounded-lg">
+                                    <h4 class="text-lg font-bold text-blue-800 mb-3">1. Immediate Cash Flow Enhancement</h4>
+                                    <p class="text-gray-700">Moving from Oregon to Texas, Florida, or Tennessee instantly increases net operating income by ~10%. On a $180,000 annual rent roll, that's an immediate <span class="font-bold text-blue-800">$17,820</span> annual raise—without changing tenants, property types, or taking additional risk.</p>
+                                </div>
+                                
+                                <!-- Benefit Card 2 -->
+                                <div class="bg-green-50 p-6 rounded-lg">
+                                    <h4 class="text-lg font-bold text-green-800 mb-3">2. The Clawback Paradox</h4>
+                                    <p class="text-gray-700 mb-3">Oregon's Clawback provision is often misunderstood:</p>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-green-600"></i>
+                                            <span><strong>Holding in Oregon:</strong> Pay state income tax on rent EVERY YEAR + eventual capital gains tax</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-green-600"></i>
+                                            <span><strong>Exchanging out:</strong> Pay ZERO state income tax on rent for decades + eventual capital gains tax only</span>
+                                        </li>
+                                    </ul>
+                                    <p class="mt-3 text-gray-700">The Clawback doesn't change your capital gains liability—it just determines which state gets it. Meanwhile, you've pocketed decades of tax-free rental income.</p>
+                                </div>
+                                
+                                <!-- Benefit Card 3 -->
+                                <div class="bg-purple-50 p-6 rounded-lg">
+                                    <h4 class="text-lg font-bold text-purple-800 mb-3">3. The "Exchange Forever" Strategy</h4>
+                                    <p class="text-gray-700 mb-3">Smart investors recognize that 1031 exchanges eliminate taxes through:</p>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-purple-600"></i>
+                                            <span><strong>Step-up in basis at death:</strong> Heirs receive properties at current market value</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-purple-600"></i>
+                                            <span><strong>Continued exchanges:</strong> Each exchange resets depreciation schedules</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-purple-600"></i>
+                                            <span><strong>Estate planning advantages:</strong> Tax-free states often have more favorable estate tax treatment</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion Item 2 -->
+                    <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                        <button class="accordion-header w-full flex justify-between items-center p-6 text-left" onclick="toggleAccordion(this)">
+                            <h3 class="text-xl font-bold text-gray-800">Overcoming Common Client Objections</h3>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-6 pt-0 grid md:grid-cols-2 gap-6">
+                                <!-- Benefit Card 1 -->
+                                <div class="bg-yellow-50 p-6 rounded-lg">
+                                    <h4 class="text-lg font-bold text-yellow-800 mb-3">"There's Nothing Better to Exchange Into"</h4>
+                                    <p class="text-gray-700 mb-3"><strong>Reframe the conversation:</strong></p>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-yellow-600"></i>
+                                            <span>It's not about finding a "better" property—it's about finding the same quality property in a better tax environment</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-yellow-600"></i>
+                                            <span>A Walgreens in Texas performs identically to a Walgreens in Oregon, minus the state income tax</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-yellow-600"></i>
+                                            <span>The cap rate differential often favors red states, meaning better cash-on-cash returns</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Benefit Card 2 -->
+                                <div class="bg-red-50 p-6 rounded-lg">
+                                    <h4 class="text-lg font-bold text-red-800 mb-3">"It's Too Much Hassle"</h4>
+                                    <p class="text-gray-700 mb-3"><strong>Counter with perspective:</strong></p>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-red-600"></i>
+                                            <span>One-time effort vs. lifetime of enhanced returns</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-red-600"></i>
+                                            <span>Professional intermediaries handle the complex parts</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-red-600"></i>
+                                            <span>The "hassle" of a few months of work eliminates decades of unnecessary taxation</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fas fa-circle text-xs mt-1.5 mr-2 text-red-600"></i>
+                                            <span>Compare: 30-60 days of effort vs. writing $17,820 checks to Oregon every year</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Steps -->
+                <div class="bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg shadow-custom p-6 mt-8">
+                    <h3 class="text-xl font-bold mb-6">Action Steps for Your Clients</h3>
+                    <ol class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="bg-blue-500 text-white rounded-full px-3 py-1 mr-3">1</span>
+                            <span><strong>Calculate their current Oregon tax burden</strong> on rental income</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-500 text-white rounded-full px-3 py-1 mr-3">2</span>
+                            <span><strong>Project 10-20 year tax savings</strong> from relocating to a tax-free state</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-500 text-white rounded-full px-3 py-1 mr-3">3</span>
+                            <span><strong>Identify 2-3 potential replacement properties</strong> in target states</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-500 text-white rounded-full px-3 py-1 mr-3">4</span>
+                            <span><strong>Engage a qualified intermediary</strong> to discuss logistics</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-500 text-white rounded-full px-3 py-1 mr-3">5</span>
+                            <span><strong>Consider an exploratory trip</strong> to target markets</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Footer -->
+                <div class="bg-gray-800 text-white rounded-lg shadow-custom p-6 mt-8">
+                    <h3 class="text-xl font-bold text-blue-400 mb-4">The Bottom Line</h3>
+                    <p class="mb-4">For investors planning to hold "forever," holding in a tax-free state is simply smarter than holding in Oregon. The real question isn't "Why exchange?" but rather <strong>"Why continue subsidizing Oregon's budget when you could be building your own wealth instead?"</strong></p>
+                    <p><strong>Remember:</strong> Every year of delay is another year of unnecessary wealth transfer. A 1031 exchange isn't a hassle—it's a strategic wealth preservation tool that pays dividends every single month.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Big Beautiful Bill Tab Content -->
+        <div id="bill" class="tab-content">
+            <div class="bg-white rounded-lg shadow-custom p-6 mb-8">
+                <div class="flex items-center mb-6">
+                    <i class="fas fa-file-invoice-dollar text-3xl text-green-600 mr-4"></i>
+                    <h2 class="text-3xl font-bold text-gray-800">One Big Beautiful Bill Act</h2>
+                </div>
+                <p class="text-xl text-gray-700">Signed into law on July 4, 2025, by President Trump, this act introduces key tax provisions affecting commercial real estate (CRE) owners, particularly in retail.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Key Tax Provisions -->
+                <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                    <button class="accordion-header w-full flex justify-between items-center p-6 text-left bg-gray-800 text-white" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-bold">Key Tax Provisions Affecting Commercial Real Estate</h3>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Provision</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Effective Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Impact on Retail CRE</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Sec. 199A Pass-Through Deduction</td>
+                                        <td class="px-6 py-4">Permanently set at 20% for pass-through entities (e.g., LLCs, partnerships).</td>
+                                        <td class="px-6 py-4">Upon enactment (July 4, 2025)</td>
+                                        <td class="px-6 py-4">Reduces taxable income for retail property owners, enhancing cash flow for reinvestment.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Carried Interest</td>
+                                        <td class="px-6 py-4">No changes, maintaining current tax treatment.</td>
+                                        <td class="px-6 py-4">N/A</td>
+                                        <td class="px-6 py-4">Neutral impact; missed opportunity for reform to align with long-term retail investments.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Sec. 1031 Like-Kind Exchanges</td>
+                                        <td class="px-6 py-4">Preserved, allowing tax-deferred property exchanges.</td>
+                                        <td class="px-6 py-4">N/A</td>
+                                        <td class="px-6 py-4">Enables retail property owners to swap properties without immediate tax liability, supporting portfolio growth.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Sec. 899 (Retaliatory Tax)</td>
+                                        <td class="px-6 py-4">Removed, eliminating barriers to foreign investment in CRE.</td>
+                                        <td class="px-6 py-4">Upon enactment</td>
+                                        <td class="px-6 py-4">Encourages foreign capital inflow, potentially increasing demand for retail properties.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Business SALT</td>
+                                        <td class="px-6 py-4">No limitations on property tax deductibility.</td>
+                                        <td class="px-6 py-4">N/A</td>
+                                        <td class="px-6 py-4">Lowers operating costs for retail properties by allowing full deduction of property taxes.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Individual SALT</td>
+                                        <td class="px-6 py-4">Cap increased to $40,000 for taxpayers earning less than $500,000, reverting to $10,000 after 5 years.</td>
+                                        <td class="px-6 py-4">Upon enactment; reverts in 2030</td>
+                                        <td class="px-6 py-4">Temporary relief for personal tax burdens, but reversion may complicate long-term planning.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">100% Bonus Depreciation & 163(j) EBITDA</td>
+                                        <td class="px-6 py-4">Made permanent and retroactive, allowing immediate deduction of capital investments and interest limitations.</td>
+                                        <td class="px-6 py-4">Upon enactment; retroactive to prior years</td>
+                                        <td class="px-6 py-4">Supports retail property improvements (e.g., store renovations) by reducing tax liability.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">REIT Assets</td>
+                                        <td class="px-6 py-4">Asset limit for Taxable REIT Subsidiaries increased from 20% to 25%.</td>
+                                        <td class="px-6 py-4">Taxable years beginning after Dec 31, 2025</td>
+                                        <td class="px-6 py-4">Enhances flexibility for retail-focused REITs, potentially increasing investment in retail properties.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Estate and Gift Tax Exemption</td>
+                                        <td class="px-6 py-4">Permanently raised to $15M, indexed for inflation.</td>
+                                        <td class="px-6 py-4">Upon enactment</td>
+                                        <td class="px-6 py-4">Simplifies wealth transfer for retail property owners, preserving family-owned assets.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap font-medium">Opportunity Zones</td>
+                                        <td class="px-6 py-4">Second round of designations starting July 1, 2026, with new reporting requirements and gain deferral adjustments.</td>
+                                        <td class="px-6 py-4">Amendments generally after Dec 31, 2026</td>
+                                        <td class="px-6 py-4">Encourages retail development in underserved areas, potentially boosting foot traffic and property values.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pros Section -->
+                <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                    <button class="accordion-header w-full flex justify-between items-center p-6 text-left bg-green-700 text-white" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-bold">Pros for Retail CRE Owners</h3>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Significant Tax Savings:</strong> The permanent 20% pass-through deduction reduces taxable income for retail property owners using LLCs or partnerships. The 100% bonus depreciation allows immediate deductions for capital investments, such as store renovations or tenant improvements.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Investment Flexibility:</strong> Preserved 1031 exchanges enable tax-deferred swaps of retail properties, encouraging portfolio growth and diversification without immediate tax liability.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Attracting Foreign Capital:</strong> Removal of Sec. 899 eliminates barriers to foreign investment, potentially increasing demand for retail properties.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Lower Operating Costs:</strong> No limits on business SALT deductions allow full deductibility of property taxes, reducing costs for retail property owners.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Estate Planning Benefits:</strong> The $15M estate tax exemption, indexed for inflation, simplifies wealth transfer for retail property owners, preserving family-owned retail assets.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Opportunity Zones for Retail:</strong> New Opportunity Zone designations expand tax-advantaged investment opportunities, potentially boosting retail development in underserved areas with increased foot traffic.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cons Section -->
+                <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                    <button class="accordion-header w-full flex justify-between items-center p-6 text-left bg-red-700 text-white" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-bold">Cons for Retail CRE Owners</h3>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Temporary SALT Cap Increase:</strong> The individual SALT cap increase to $40,000 reverts to $10,000 after 5 years, potentially increasing personal tax burdens for retail property owners with significant personal income.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Opportunity Zone Complexity:</strong> Adjustments to the Opportunity Zone program may introduce new compliance requirements, increasing administrative costs for retail developments.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>No Carried Interest Reform:</strong> The lack of changes to carried interest taxation misses an opportunity to align tax treatment with long-term retail CRE investments.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Retroactive Provision Challenges:</strong> Retroactive application of bonus depreciation may require amending prior tax filings, creating administrative burdens for retail property owners.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impacts Section -->
+                <div class="bg-white rounded-lg shadow-custom overflow-hidden">
+                    <button class="accordion-header w-full flex justify-between items-center p-6 text-left bg-blue-700 text-white" onclick="toggleAccordion(this)">
+                        <h3 class="text-xl font-bold">Impacts on Government, Economy, and Taxes</h3>
+                        <i class="fas fa-chevron-down transition-transform"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6">
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-landmark text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Government:</strong> Permanent tax deductions and increased estate tax exemptions may reduce federal revenue, potentially limiting public spending on infrastructure or services that benefit retail areas.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chart-line text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Economy:</strong> Preserving 1031 exchanges and Opportunity Zones is likely to stimulate retail CRE investment, boosting local economies through job creation and increased consumer activity in retail centers.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-file-invoice-dollar text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Taxes:</strong> Retroactive bonus depreciation simplifies tax planning but may strain IRS resources, potentially delaying processing for retail property owners filing amended returns.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-globe-americas text-blue-500 mt-1 mr-3"></i>
+                                    <div>
+                                        <p><strong>Foreign Investment:</strong> Removal of Sec. 899 is expected to attract global capital, strengthening the retail CRE market by increasing demand for properties.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="bg-gray-100 rounded-lg shadow-custom p-6 text-center mt-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Need Personalized Advice?</h3>
+                    <p class="text-gray-700 mb-4">For personalized advice on how the One Big Beautiful Bill Act impacts your retail properties, contact your commercial real estate broker or tax professional.</p>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                        <i class="fas fa-envelope mr-2"></i>Contact Us
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function openTab(tabName) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Accordion functionality
+        function toggleAccordion(button) {
+            const accordionItem = button.parentElement;
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            // Toggle active class on accordion item
+            accordionItem.classList.toggle('active');
+            
+            // Toggle content visibility
+            content.classList.toggle('active');
+            
+            // Rotate icon
+            icon.classList.toggle('rotate-180');
+        }
+
+        // Initialize first accordion as open
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstAccordion = document.querySelector('.accordion-header');
+            if (firstAccordion) {
+                firstAccordion.nextElementSibling.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
