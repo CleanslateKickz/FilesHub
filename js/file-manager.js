@@ -1,3 +1,4 @@
+
 class FileManager {
     constructor() {
         this.githubAPI = new GitHubAPI();
@@ -51,8 +52,8 @@ class FileManager {
         const fileType = this.getFileType(extension);
         const dateInfo = this.extractDateFromFilename(file.name);
 
-        // Generate GitHub Pages URL instead of raw URL
-        const githubPagesUrl = this.generateGitHubPagesUrl(folderName, file.name);
+        // Generate local URL instead of GitHub Pages URL
+        const localUrl = `${window.location.origin}/${folderName}/${file.name}`;
 
         return {
             name: file.name,
@@ -60,7 +61,7 @@ class FileManager {
             size: file.size,
             type: fileType,
             extension: extension,
-            url: githubPagesUrl,
+            url: localUrl,
             htmlUrl: file.html_url,
             date: dateInfo.date,
             parsedDate: dateInfo.parsedDate,
@@ -167,16 +168,8 @@ class FileManager {
         return months[monthName.toLowerCase()] || null;
     }
 
-    generateGitHubPagesUrl(folderName, fileName) {
-        // Get the GitHub Pages base URL from the GitHub API instance
-        const owner = this.githubAPI.owner;
-        const repo = this.githubAPI.repo;
-
-        // Construct GitHub Pages URL
-        const baseUrl = `https://${owner}.github.io/${repo}`;
-        const filePath = `${folderName}/${fileName}`;
-
-        return `${baseUrl}/${filePath}`;
+    generateLocalUrl(folderName, fileName) {
+        return `${window.location.origin}/${folderName}/${fileName}`;
     }
 
     async getFileCount(folderName) {
@@ -191,13 +184,12 @@ class FileManager {
 
     async getRecentFiles(limit = 10) {
         try {
-            const [articlesFiles, notesFiles, projectFiles] = await Promise.all([
+            const [articlesFiles, notesFiles] = await Promise.all([
                 this.getFilesFromFolder('articles'),
-                this.getFilesFromFolder('notes'),
-                this.getFilesFromFolder('Projects').catch(() => [])
+                this.getFilesFromFolder('notes')
             ]);
 
-            const allFiles = [...articlesFiles, ...notesFiles, ...projectFiles];
+            const allFiles = [...articlesFiles, ...notesFiles];
 
             // Sort by parsed date if available, otherwise by filename
             allFiles.sort((a, b) => {
@@ -219,13 +211,12 @@ class FileManager {
 
     async searchAllFiles(query, contentType = 'all') {
         try {
-            const [articlesFiles, notesFiles, projectFiles] = await Promise.all([
+            const [articlesFiles, notesFiles] = await Promise.all([
                 this.getFilesFromFolder('articles'),
-                this.getFilesFromFolder('notes'),
-                this.getFilesFromFolder('Projects').catch(() => [])
+                this.getFilesFromFolder('notes')
             ]);
 
-            let allFiles = [...articlesFiles, ...notesFiles, ...projectFiles];
+            let allFiles = [...articlesFiles, ...notesFiles];
 
             // Filter by content type if specified
             if (contentType !== 'all') {
