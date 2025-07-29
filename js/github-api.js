@@ -19,7 +19,7 @@ class GitHubAPI {
         }
         
         // For local development, use environment variable or default
-        return window.GITHUB_OWNER || 'your-username';
+        return window.GITHUB_OWNER || 'CleanslateKickz';
     }
     
     getRepoName() {
@@ -32,7 +32,7 @@ class GitHubAPI {
         }
         
         // Fallback to environment or default
-        return window.GITHUB_REPO || 'your-repository-name';
+        return window.GITHUB_REPO || 'file-management-hub';
     }
     
     getAuthToken() {
