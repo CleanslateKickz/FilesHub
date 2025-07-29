@@ -9,8 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
     loadCategoryCounts();
     loadRecentFiles();
     
+    // Initialize project discovery
+    loadProjects();
+    
     // Initialize navigation enhancements
     initializeNavigation();
+    
+    // Initialize project modal
+    initializeProjectModal();
 });
 
 function initializeGlobalSearch() {
@@ -271,6 +277,268 @@ function initializeAnimations() {
     document.querySelectorAll('.category-card, .file-item').forEach(el => {
         observer.observe(el);
     });
+}
+
+async function loadProjects() {
+    const projectsGrid = document.getElementById('projectsGrid');
+    if (!projectsGrid) return;
+    
+    try {
+        // Get all HTML files from the repository root and subdirectories
+        const projects = await discoverProjects();
+        
+        if (projects.length === 0) {
+            projectsGrid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>No projects found</h3>
+                    <p>Upload HTML files to automatically display them as projects.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        projectsGrid.innerHTML = projects.map(project => `
+            <div class="project-card">
+                <div class="project-image">
+                    ${project.screenshot ? 
+                        `<img src="${project.screenshot}" alt="${project.name}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\"fas fa-code\\"></i>'">` :
+                        '<i class="fas fa-code"></i>'
+                    }
+                </div>
+                <div class="project-content">
+                    <div class="project-title">${project.name}</div>
+                    <div class="project-description">${project.description}</div>
+                    <a href="${project.url}" target="_blank" class="project-link">
+                        Open Project <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                <div class="project-type-badge">Project</div>
+            </div>
+        `).join('');
+        
+        // Load custom projects from localStorage
+        loadCustomProjects();
+        
+    } catch (error) {
+        console.error('Error loading projects:', error);
+        projectsGrid.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Failed to load projects.</div>';
+    }
+}
+
+async function discoverProjects() {
+    const githubAPI = window.githubAPI;
+    const projects = [];
+    
+    try {
+        // Get repository contents
+        const contents = await githubAPI.getRepoContents();
+        
+        // Find all HTML files (excluding specific directories)
+        for (const item of contents) {
+            if (item.type === 'file' && 
+                item.name.endsWith('.html') && 
+                item.name !== 'index.html' &&
+                !item.path.includes('/index.html')) {
+                
+                const projectName = item.name.replace('.html', '').replace(/[-_]/g, ' ');
+                const screenshotPath = await findScreenshot(item.name);
+                
+                projects.push({
+                    name: projectName.charAt(0).toUpperCase() + projectName.slice(1),
+                    description: `Interactive ${projectName} application`,
+                    url: `https://${githubAPI.owner}.github.io/${githubAPI.repo}/${item.name}`,
+                    screenshot: screenshotPath,
+                    path: item.path
+                });
+            }
+        }
+        
+        // Also check subdirectories for HTML files
+        for (const item of contents) {
+            if (item.type === 'dir' && !['articles', 'notes', 'js', 'css', '.git'].includes(item.name)) {
+                const subProjects = await discoverProjectsInDirectory(item.path);
+                projects.push(...subProjects);
+            }
+        }
+        
+    } catch (error) {
+        console.error('Error discovering projects:', error);
+    }
+    
+    return projects;
+}
+
+async function discoverProjectsInDirectory(dirPath) {
+    const githubAPI = window.githubAPI;
+    const projects = [];
+    
+    try {
+        const contents = await githubAPI.getRepoContents(dirPath);
+        
+        for (const item of contents) {
+            if (item.type === 'file' && 
+                item.name.endsWith('.html') && 
+                item.name !== 'index.html') {
+                
+                const projectName = item.name.replace('.html', '').replace(/[-_]/g, ' ');
+                const screenshotPath = await findScreenshot(item.name, dirPath);
+                
+                projects.push({
+                    name: `${dirPath}/${projectName}`.replace(/[-_]/g, ' '),
+                    description: `${projectName} application in ${dirPath}`,
+                    url: `https://${githubAPI.owner}.github.io/${githubAPI.repo}/${item.path}`,
+                    screenshot: screenshotPath,
+                    path: item.path
+                });
+            }
+        }
+    } catch (error) {
+        console.error(`Error discovering projects in ${dirPath}:`, error);
+    }
+    
+    return projects;
+}
+
+async function findScreenshot(htmlFileName, directory = '') {
+    const githubAPI = window.githubAPI;
+    const baseName = htmlFileName.replace('.html', '');
+    const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+    
+    try {
+        // Check in images folder first
+        const imageDir = directory ? `${directory}/images` : 'images';
+        try {
+            const imageContents = await githubAPI.getRepoContents(imageDir);
+            
+            for (const ext of imageExtensions) {
+                const imageName = `${baseName}.${ext}`;
+                const imageFile = imageContents.find(file => file.name === imageName);
+                if (imageFile) {
+                    return `https://${githubAPI.owner}.github.io/${githubAPI.repo}/${imageFile.path}`;
+                }
+            }
+        } catch (e) {
+            // Images folder doesn't exist, continue
+        }
+        
+        // Check in same directory as HTML file
+        const dirContents = await githubAPI.getRepoContents(directory);
+        for (const ext of imageExtensions) {
+            const imageName = `${baseName}.${ext}`;
+            const imageFile = dirContents.find(file => file.name === imageName);
+            if (imageFile) {
+                return `https://${githubAPI.owner}.github.io/${githubAPI.repo}/${imageFile.path}`;
+            }
+        }
+        
+    } catch (error) {
+        console.error('Error finding screenshot:', error);
+    }
+    
+    return null;
+}
+
+function loadCustomProjects() {
+    const customProjects = JSON.parse(localStorage.getItem('customProjects') || '[]');
+    const projectsGrid = document.getElementById('projectsGrid');
+    
+    if (customProjects.length > 0 && projectsGrid) {
+        const customProjectsHTML = customProjects.map(project => `
+            <div class="project-card">
+                <div class="project-image">
+                    ${project.image ? 
+                        `<img src="${project.image}" alt="${project.title}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\"fas fa-plus\\"></i>'">` :
+                        '<i class="fas fa-plus"></i>'
+                    }
+                </div>
+                <div class="project-content">
+                    <div class="project-title">${project.title}</div>
+                    <div class="project-description">${project.description}</div>
+                    <a href="${project.url}" target="_blank" class="project-link">
+                        Open Project <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                <div class="project-type-badge">Custom</div>
+            </div>
+        `).join('');
+        
+        projectsGrid.insertAdjacentHTML('beforeend', customProjectsHTML);
+    }
+}
+
+function initializeProjectModal() {
+    const addBtn = document.getElementById('addProjectBtn');
+    const modal = document.getElementById('addProjectModal');
+    const cancelBtns = document.querySelectorAll('#cancelModal, #cancelModal2');
+    const projectForm = document.getElementById('projectForm');
+    
+    if (!addBtn || !modal) return;
+    
+    // Open modal
+    addBtn.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
+    
+    // Close modal
+    cancelBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
+    // Handle form submission
+    if (projectForm) {
+        projectForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(projectForm);
+            const projectData = Object.fromEntries(formData.entries());
+            
+            // Save to localStorage
+            const customProjects = JSON.parse(localStorage.getItem('customProjects') || '[]');
+            customProjects.unshift(projectData);
+            localStorage.setItem('customProjects', JSON.stringify(customProjects));
+            
+            // Add to grid
+            const projectsGrid = document.getElementById('projectsGrid');
+            const newProjectHTML = `
+                <div class="project-card">
+                    <div class="project-image">
+                        ${projectData.image ? 
+                            `<img src="${projectData.image}" alt="${projectData.title}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\"fas fa-plus\\"></i>'">` :
+                            '<i class="fas fa-plus"></i>'
+                        }
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">${projectData.title}</div>
+                        <div class="project-description">${projectData.description}</div>
+                        <a href="${projectData.url}" target="_blank" class="project-link">
+                            Open Project <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="project-type-badge">Custom</div>
+                </div>
+            `;
+            
+            if (projectsGrid.innerHTML.includes('empty-state')) {
+                projectsGrid.innerHTML = newProjectHTML;
+            } else {
+                projectsGrid.insertAdjacentHTML('afterbegin', newProjectHTML);
+            }
+            
+            // Reset form and close modal
+            projectForm.reset();
+            modal.style.display = 'none';
+        });
+    }
 }
 
 // Initialize animations when DOM is loaded
