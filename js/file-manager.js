@@ -191,12 +191,13 @@ class FileManager {
 
     async getRecentFiles(limit = 10) {
         try {
-            const [articlesFiles, notesFiles] = await Promise.all([
+            const [articlesFiles, notesFiles, projectFiles] = await Promise.all([
                 this.getFilesFromFolder('articles'),
-                this.getFilesFromFolder('notes')
+                this.getFilesFromFolder('notes'),
+                this.getFilesFromFolder('Projects').catch(() => [])
             ]);
 
-            const allFiles = [...articlesFiles, ...notesFiles];
+            const allFiles = [...articlesFiles, ...notesFiles, ...projectFiles];
 
             // Sort by parsed date if available, otherwise by filename
             allFiles.sort((a, b) => {
@@ -218,12 +219,13 @@ class FileManager {
 
     async searchAllFiles(query, contentType = 'all') {
         try {
-            const [articlesFiles, notesFiles] = await Promise.all([
+            const [articlesFiles, notesFiles, projectFiles] = await Promise.all([
                 this.getFilesFromFolder('articles'),
-                this.getFilesFromFolder('notes')
+                this.getFilesFromFolder('notes'),
+                this.getFilesFromFolder('Projects').catch(() => [])
             ]);
 
-            let allFiles = [...articlesFiles, ...notesFiles];
+            let allFiles = [...articlesFiles, ...notesFiles, ...projectFiles];
 
             // Filter by content type if specified
             if (contentType !== 'all') {
