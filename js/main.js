@@ -128,8 +128,11 @@ async function loadCategoryCounts() {
         }
 
         if (notesCountEl) {
-            notesCountEl.textContent = `${notesCount} files`;
+            notesCountel.textContent = `${notesCount} files`;
         }
+
+        // Load category images
+        await loadCategoryImages();
 
     } catch (error) {
         console.error('Error loading category counts:', error);
@@ -137,6 +140,64 @@ async function loadCategoryCounts() {
         document.querySelectorAll('.file-count').forEach(el => {
             el.textContent = 'View files';
         });
+    }
+}
+
+async function loadCategoryImages() {
+    try {
+        // Get images from the images folder
+        const imagesContents = await window.githubAPI.getRepoContents('images');
+        if (!Array.isArray(imagesContents)) return;
+
+        // Find representative images for articles and notes
+        const articleImages = imagesContents.filter(file => 
+            file.name.toLowerCase().includes('retail') || 
+            file.name.toLowerCase().includes('news') ||
+            file.name.toLowerCase().includes('article')
+        );
+
+        const noteImages = imagesContents.filter(file => 
+            file.name.toLowerCase().includes('washington') || 
+            file.name.toLowerCase().includes('oregon') ||
+            file.name.toLowerCase().includes('contractor') ||
+            file.name.toLowerCase().includes('bill')
+        );
+
+        // Add images to article card
+        if (articleImages.length > 0) {
+            const articlesCard = document.getElementById('articlesCard');
+            if (articlesCard) {
+                const imageUrl = `https://cleanslatekickz.github.io/FilesHub/images/${articleImages[0].name}`;
+                addImageToCard(articlesCard, imageUrl, 'Articles Preview');
+            }
+        }
+
+        // Add images to notes card
+        if (noteImages.length > 0) {
+            const notesCard = document.getElementById('notesCard');
+            if (notesCard) {
+                const imageUrl = `https://cleanslatekickz.github.io/FilesHub/images/${noteImages[0].name}`;
+                addImageToCard(notesCard, imageUrl, 'Notes Preview');
+            }
+        }
+
+    } catch (error) {
+        console.error('Error loading category images:', error);
+    }
+}
+
+function addImageToCard(cardElement, imageUrl, altText) {
+    const icon = cardElement.querySelector('.category-icon');
+    if (icon) {
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'category-image';
+        imageContainer.innerHTML = `<img src="${imageUrl}" alt="${altText}" loading="lazy" onerror="this.style.display='none'">`;
+        
+        // Insert image container after the icon
+        icon.parentNode.insertBefore(imageContainer, icon.nextSibling);
+        
+        // Hide the icon since we now have an image
+        icon.style.display = 'none';
     }
 }
 
@@ -283,155 +344,142 @@ async function loadProjects() {
     const projectsGrid = document.getElementById('projectsGrid');
     if (!projectsGrid) return;
 
+    // Clear loading placeholder
+    projectsGrid.innerHTML = '';
+
     try {
-        // Get all HTML files from the repository root and subdirectories
+        // Get discovered projects
         const projects = await discoverProjects();
 
-        if (projects.length === 0) {
-            projectsGrid.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-folder-open"></i>
-                    <h3>No projects found</h3>
-                    <p>Upload HTML files to automatically display them as projects.</p>
+        // Load custom projects from localStorage first
+        loadCustomProjects();
+
+        // Add discovered projects
+        if (projects.length > 0) {
+            const projectsHTML = projects.map(project => `
+                <div class="project-card">
+                    <div class="project-image">
+                        ${project.screenshot ? 
+                            `<img src="${project.screenshot}" alt="${project.name}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\"fas fa-code\\"></i>'">` :
+                            '<i class="fas fa-code"></i>'
+                        }
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">${project.name}</div>
+                        <div class="project-description">${project.description}</div>
+                        <a href="${project.url}" target="_blank" class="project-link">
+                            Open Project <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="project-type-badge">Auto</div>
                 </div>
-            `;
-            return;
+            `).join('');
+
+            projectsGrid.insertAdjacentHTML('beforeend', projectsHTML);
         }
 
-        projectsGrid.innerHTML = projects.map(project => `
-            <div class="project-card">
-                <div class="project-image">
-                    ${project.screenshot ? 
-                        `<img src="${project.screenshot}" alt="${project.name}" loading="lazy" onerror="this.parentElement.innerHTML='<i class=\\"fas fa-code\\"></i>'">` :
-                        '<i class="fas fa-code"></i>'
-                    }
+        // Show empty state if no projects at all
+        if (projectsGrid.children.length === 0) {
+            projectsGrid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-plus"></i>
+                    <h3>No projects found</h3>
+                    <p>Click the + button to add your first project!</p>
                 </div>
-                <div class="project-content">
-                    <div class="project-title">${project.name}</div>
-                    <div class="project-description">${project.description}</div>
-                    <a href="${project.url}" target="_blank" class="project-link">
-                        Open Project <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
-                <div class="project-type-badge">Project</div>
-            </div>
-        `).join('');
-
-        // Load custom projects from localStorage
-        loadCustomProjects();
+            `;
+        }
 
     } catch (error) {
         console.error('Error loading projects:', error);
-        projectsGrid.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Failed to load projects.</div>';
+        projectsGrid.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle"></i> 
+                Failed to load projects. You can still add custom projects using the + button.
+            </div>
+        `;
+        
+        // Still try to load custom projects even if discovery failed
+        loadCustomProjects();
     }
 }
 
 async function discoverProjects() {
-    const githubAPI = window.githubAPI;
     const projects = [];
 
     try {
-        // Get repository contents
-        const contents = await githubAPI.getRepoContents();
-
-        // Find all HTML files (excluding specific directories)
-        for (const item of contents) {
-            if (item.type === 'file' && 
-                item.name.endsWith('.html') && 
-                item.name !== 'index.html' &&
-                !item.path.includes('/index.html')) {
-
-                const projectName = item.name.replace('.html', '').replace(/[-_]/g, ' ');
-                const screenshotPath = await findScreenshot(item.name);
-
-                projects.push({
-                    name: projectName.charAt(0).toUpperCase() + projectName.slice(1),
-                    description: `Interactive ${projectName} application`,
-                    url: `https://${githubAPI.owner}.github.io/${githubAPI.repo}/${item.name}`,
-                    screenshot: screenshotPath,
-                    path: item.path
-                });
+        // Use GitHub API to find projects in the Projects folder
+        const fileManager = new FileManager();
+        const projectsContents = await window.githubAPI.getRepoContents('Projects');
+        
+        if (Array.isArray(projectsContents)) {
+            for (const file of projectsContents) {
+                if (file.type === 'file' && file.name.toLowerCase().endsWith('.html')) {
+                    const projectName = file.name.replace('.html', '');
+                    const screenshot = await findScreenshot(projectName, 'Projects');
+                    
+                    projects.push({
+                        name: projectName.replace(/-/g, ' '),
+                        description: `Project application in Projects folder`,
+                        url: `https://cleanslatekickz.github.io/FilesHub/Projects/${file.name}`,
+                        screenshot: screenshot,
+                        path: file.path
+                    });
+                }
             }
         }
 
-        // Also check subdirectories for HTML files
-        for (const item of contents) {
-            if (item.type === 'dir' && !['articles', 'notes', 'js', 'css', '.git'].includes(item.name)) {
-                const subProjects = await discoverProjectsInDirectory(item.path);
-                projects.push(...subProjects);
-            }
-        }
+        // Add the main hub as a project
+        projects.unshift({
+            name: 'File Management Hub',
+            description: 'Organized collection of articles, notes, and documents with search functionality',
+            url: 'https://cleanslatekickz.github.io/FilesHub/',
+            screenshot: null,
+            path: 'index.html'
+        });
 
     } catch (error) {
         console.error('Error discovering projects:', error);
+        // Fallback to main hub only
+        projects.push({
+            name: 'File Management Hub',
+            description: 'Organized collection of articles, notes, and documents with search functionality',
+            url: 'https://cleanslatekickz.github.io/FilesHub/',
+            screenshot: null,
+            path: 'index.html'
+        });
     }
 
     return projects;
 }
 
-async function discoverProjectsInDirectory(dirPath) {
-    const githubAPI = window.githubAPI;
-    const projects = [];
-
+async function findScreenshot(projectName, directory = '') {
     try {
-        const contents = await githubAPI.getRepoContents(dirPath);
-
-        for (const item of contents) {
-            if (item.type === 'file' && 
-                item.name.endsWith('.html') && 
-                item.name !== 'index.html') {
-
-                const projectName = item.name.replace('.html', '').replace(/[-_]/g, ' ');
-                const screenshotPath = await findScreenshot(item.name, dirPath);
-
-                projects.push({
-                    name: `${dirPath}/${projectName}`.replace(/[-_]/g, ' '),
-                    description: `${projectName} application in ${dirPath}`,
-                    url: `https://${githubAPI.owner}.github.io/${githubAPI.repo}/${item.path}`,
-                    screenshot: screenshotPath,
-                    path: item.path
-                });
-            }
-        }
-    } catch (error) {
-        console.error(`Error discovering projects in ${dirPath}:`, error);
-    }
-
-    return projects;
-}
-
-async function findScreenshot(htmlFileName, directory = '') {
-    const githubAPI = window.githubAPI;
-    const baseName = htmlFileName.replace('.html', '');
-    const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-
-    try {
-        // Check in images folder first
-        // Look for images in common locations
-        const imagePaths = [
-        'images'  // Images are in the root images/ folder
-    ];
-
-        for (const imageDir of imagePaths) {
-            try {
-                const imageContents = await githubAPI.getRepoContents(imageDir);
-
-                for (const ext of imageExtensions) {
-                    const imageName = `${baseName}.${ext}`;
-                    const imageFile = imageContents.find(file => file.name === imageName);
-                    if (imageFile) {
-                        return `https://${githubAPI.owner}.github.io/${githubAPI.repo}/${imageFile.path}`;
-                    }
-                }
-            } catch (e) {
-                // Images folder doesn't exist, continue
+        // Check for screenshot in Projects folder first
+        const projectsContents = await window.githubAPI.getRepoContents('Projects');
+        if (Array.isArray(projectsContents)) {
+            const imageFile = projectsContents.find(file => 
+                file.name.toLowerCase() === `${projectName.toLowerCase()}.png` ||
+                file.name.toLowerCase() === `${projectName.toLowerCase()}.jpg`
+            );
+            if (imageFile) {
+                return `https://cleanslatekickz.github.io/FilesHub/Projects/${imageFile.name}`;
             }
         }
 
+        // Check for screenshot in images folder
+        const imagesContents = await window.githubAPI.getRepoContents('images');
+        if (Array.isArray(imagesContents)) {
+            const imageFile = imagesContents.find(file => 
+                file.name.toLowerCase() === `${projectName.toLowerCase()}.png` ||
+                file.name.toLowerCase() === `${projectName.toLowerCase()}.jpg`
+            );
+            if (imageFile) {
+                return `https://cleanslatekickz.github.io/FilesHub/images/${imageFile.name}`;
+            }
+        }
     } catch (error) {
-        console.error('Error finding screenshot:', error);
+        console.log('Could not find screenshot for', projectName);
     }
-
     return null;
 }
 
