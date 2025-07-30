@@ -1,9 +1,9 @@
 class GitHubAPI {
     constructor() {
-        // For local development in Replit, we'll use a mock API
-        this.owner = 'local';
+        // GitHub repository configuration
+        this.owner = 'cleanslatekickz';
         this.repo = 'FilesHub';
-        this.baseUrl = window.location.origin;
+        this.baseUrl = 'https://api.github.com';
 
         // Cache for responses
         this.cache = new Map();
@@ -11,67 +11,67 @@ class GitHubAPI {
     }
 
     async getRepoContents(path = '') {
-        // For local development, return mock data based on actual file structure
-        const mockStructure = {
-            '': [
-                { name: 'articles', type: 'dir', path: 'articles' },
-                { name: 'notes', type: 'dir', path: 'notes' },
-                { name: 'index.html', type: 'file', path: 'index.html' }
-            ],
-            'articles': [
-                {
-                    name: '2025-01-24-sample-article.html',
-                    type: 'file',
-                    path: 'articles/2025-01-24-sample-article.html',
-                    size: 2048,
-                    html_url: `${this.baseUrl}/articles/2025-01-24-sample-article.html`,
-                    sha: 'abc123',
-                    updated_at: '2025-01-24T00:00:00Z'
-                },
-                {
-                    name: 'index.html',
-                    type: 'file',
-                    path: 'articles/index.html',
-                    size: 1024,
-                    html_url: `${this.baseUrl}/articles/index.html`,
-                    sha: 'def456',
-                    updated_at: '2025-01-24T00:00:00Z'
-                }
-            ],
-            'notes': [
-                {
-                    name: '2025-01-24-setup-guide.html',
-                    type: 'file',
-                    path: 'notes/2025-01-24-setup-guide.html',
-                    size: 3072,
-                    html_url: `${this.baseUrl}/notes/2025-01-24-setup-guide.html`,
-                    sha: 'ghi789',
-                    updated_at: '2025-01-24T00:00:00Z'
-                },
-                {
-                    name: 'index.html',
-                    type: 'file',
-                    path: 'notes/index.html',
-                    size: 1024,
-                    html_url: `${this.baseUrl}/notes/index.html`,
-                    sha: 'jkl012',
-                    updated_at: '2025-01-24T00:00:00Z'
-                }
-            ]
-        };
+        const cacheKey = `contents_${path}`;
+        const cached = this.getCachedResponse(cacheKey);
+        if (cached) return cached;
 
-        return mockStructure[path] || [];
+        try {
+            const url = `${this.baseUrl}/repos/${this.owner}/${this.repo}/contents/${path}`;
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                if (response.status === 404) {
+                    return [];
+                }
+                throw new Error(`GitHub API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            const result = Array.isArray(data) ? data : [data];
+            
+            // Transform the data to include proper URLs for GitHub Pages
+            const transformedResult = result.map(item => ({
+                ...item,
+                html_url: item.type === 'file' ? 
+                    `https://${this.owner}.github.io/${this.repo}/${item.path}` : 
+                    item.html_url
+            }));
+            
+            this.setCachedResponse(cacheKey, transformedResult);
+            return transformedResult;
+        } catch (error) {
+            console.error('Error fetching repository contents:', error);
+            return [];
+        }
     }
 
     async getRepoInfo() {
-        return {
-            name: 'FilesHub',
-            full_name: 'local/FilesHub',
-            description: 'File Management Hub - Local Development',
-            html_url: this.baseUrl,
-            created_at: '2025-01-24T00:00:00Z',
-            updated_at: '2025-01-24T00:00:00Z'
-        };
+        const cacheKey = 'repo_info';
+        const cached = this.getCachedResponse(cacheKey);
+        if (cached) return cached;
+
+        try {
+            const url = `${this.baseUrl}/repos/${this.owner}/${this.repo}`;
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`GitHub API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            this.setCachedResponse(cacheKey, data);
+            return data;
+        } catch (error) {
+            console.error('Error fetching repository info:', error);
+            return {
+                name: this.repo,
+                full_name: `${this.owner}/${this.repo}`,
+                description: 'File Management Hub',
+                html_url: `https://github.com/${this.owner}/${this.repo}`,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+        }
     }
 
     async getRecentCommits(perPage = 10) {
@@ -121,15 +121,43 @@ class GitHubAPI {
         };
     }
 
+    getCachedResponse(key) {
+        const cached = this.cache.get(key);
+        if (cached && Date.now() - cached.timestamp < this.cacheTimeout) {
+            return cached.data;
+        }
+        this.cache.delete(key);
+        return null;
+    }
+
+    setCachedResponse(key, data) {
+        this.cache.set(key, {
+            data: data,
+            timestamp: Date.now()
+        });
+    }
+
     clearCache() {
         this.cache.clear();
     }
 
     getCacheStats() {
+        const now = Date.now();
+        let validEntries = 0;
+        let expiredEntries = 0;
+        
+        for (const [key, value] of this.cache.entries()) {
+            if (now - value.timestamp < this.cacheTimeout) {
+                validEntries++;
+            } else {
+                expiredEntries++;
+            }
+        }
+        
         return {
             totalEntries: this.cache.size,
-            validEntries: this.cache.size,
-            expiredEntries: 0
+            validEntries,
+            expiredEntries
         };
     }
 }
