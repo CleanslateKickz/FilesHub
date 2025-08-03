@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grist Custom Widget Directory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* --- Basic Setup & Typography --- */
+    :root {
+      --primary-blue: #3b82f6;
+      --primary-blue-dark: #2563eb;
+      --light-gray: #f8fafc;
+      --border-gray: #e2e8f0;
+      --text-dark: #1e293b;
+      --text-light: #64748b;
+      --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      --card-shadow-hover: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      color: #1a202c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* --- Header --- */
+    .header-section {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      border-bottom: 1px solid var(--border-gray);
+      padding: 2.5rem 0 2rem;
+      text-align: center;
+    }
+
+    .header-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .sub-header {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    /* --- Controls (Search & View Toggle) --- */
+    .controls-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 2rem 0;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-bar {
+      position: relative;
+      flex: 1;
+      max-width: 500px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 2px solid var(--border-gray);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      background: #ffffff;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-bar::before {
+      content: '\f002';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    .view-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .view-toggle {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 0.5rem;
+      padding: 0.25rem;
+      border: 1px solid var(--border-gray);
+    }
+
+    .view-toggle button {
+      padding: 0.5rem 0.75rem;
+      border: none;
+      background: transparent;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .view-toggle button.active {
+      background: var(--primary-blue);
+      color: white;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* --- Widget Gallery & Cards --- */
+    .widget-gallery {
+      display: grid;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .widget-gallery.cols-2 { grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); }
+    .widget-gallery.cols-3 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+    .widget-gallery.cols-4 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    .widget-card {
+      background: #ffffff;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border-gray);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .widget-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: #cbd5e1;
+    }
+
+    .card-image-wrapper {
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        position: relative;
+        background-color: var(--light-gray);
+    }
+
+    .card-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .card-buttons {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+      flex: 1;
+    }
+    
+    .card-link.primary {
+        background: var(--primary-blue);
+        color: #ffffff;
+    }
+    .card-link.primary:hover {
+        background: var(--primary-blue-dark);
+    }
+    
+    .card-link.secondary {
+        background: #f1f5f9;
+        color: #334155;
+        border-color: #e2e8f0;
+    }
+    .card-link.secondary:hover {
+        background: #e2e8f0;
+    }
+
+    /* --- Footer & Loading --- */
+    .loading-message {
+      color: var(--text-light);
+      text-align: center;
+      margin: 3rem 0;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .loading-message .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #e2e8f0;
+      border-radius: 50%;
+      border-top-color: var(--primary-blue);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .footer {
+      text-align: center;
+      margin: 3rem 0 2rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-gray);
+      padding-top: 2rem;
+    }
+    .footer a {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* --- Responsive Design --- */
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .controls-section { flex-direction: column; align-items: stretch; }
+      .search-bar { max-width: none; }
+      .widget-gallery.cols-2, .widget-gallery.cols-3, .widget-gallery.cols-4 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header-section">
+    <div class="container">
+      <div class="header-content">
+        <h1><i class="fas fa-cubes-stacked"></i> Grist Widget Directory</h1>
+        <p class="sub-header">A curated collection of custom widgets for Grist.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls-section">
+      <div class="search-bar">
+        <input type="text" id="widgetSearch" placeholder="Search widgets...">
+      </div>
+      <div class="view-controls">
+        <div class="view-toggle">
+          <button data-cols="2" title="2 Columns"><i class="fas fa-grip"></i></button>
+          <button data-cols="3" class="active" title="3 Columns"><i class="fas fa-grip-vertical"></i></button>
+          <button data-cols="4" title="4 Columns"><i class="fas fa-table-cells"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="widget-gallery-container">
+      <div id="widget-gallery" class="widget-gallery cols-3">
+        <div class="loading-message"><div class="spinner"></div> Loading widgets...</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank">Your Name/Org</a>. All Rights Reserved.</p>
+    <p>Powered by <a href="https://getgrist.com" target="_blank">Grist</a> and <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
+  </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // =================================================================================
+    // CONFIGURATION
+    // =================================================================================
+    // STEP 1: Update these values with your GitHub repository details.
+    const CONFIG = {
+        githubUser: "CleanslateKickz", // Your GitHub username or organization name
+        githubRepo: "grist-widgets",    // The name of THIS repository
+        widgetsFolder: "widgets",       // The folder where your widget .html files are stored
+        imagesFolder: "images"          // The folder where your widget screenshots are stored
+    };
+
+    // STEP 2: Add metadata for each of your widgets here.
+    // The key should be the widget's filename WITHOUT the .html extension.
+    const WIDGET_METADATA = {
+        "sample-widget-1": {
+            title: "Sample Chart Widget",
+            description: "A beautiful and interactive chart widget that visualizes your Grist data in real-time. Supports bar, line, and pie charts.",
+            gristUrl: "https://docs.getgrist.com/..." // The URL to a Grist doc using this widget
+        },
+        "sample-widget-2": {
+            title: "Data Validator",
+            description: "This widget helps ensure data quality by running custom validation rules against your records.",
+            gristUrl: "https://docs.getgrist.com/..."
+        },
+        "another-cool-widget": {
+            title: "Another Cool Widget",
+            description: "This is a placeholder for another one of your awesome widgets. Remember to add its details here!",
+            gristUrl: "" // Can be left empty if there's no public doc link
+        }
+    };
+    
+    // Fallback image if a widget's screenshot is not found
+    const FALLBACK_IMG_URL = `https://placehold.co/600x400/f8fafc/64748b?text=Widget+Screenshot`;
+
+    // =================================================================================
+    // APPLICATION LOGIC (No need to edit below this line)
+    // =================================================================================
+    
+    const gallery = document.getElementById('widget-gallery');
+
+    /**
+     * Fetches the list of widget files from the GitHub repository.
+     */
+    async function fetchWidgets() {
+        const apiUrl = `https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.githubRepo}/contents/${CONFIG.widgetsFolder}`;
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error(`GitHub API error: ${response.statusText}`);
+            }
+            const files = await response.json();
+            // Filter for .html files only
+            const widgetFiles = files.filter(file => file.type === 'file' && file.name.endsWith('.html'));
+            renderWidgets(widgetFiles);
+        } catch (error) {
+            console.error("Failed to fetch widgets:", error);
+            gallery.innerHTML = `<div class="loading-message">Could not load widgets. Check repository settings and network connection.</div>`;
+        }
+    }
+
+    /**
+     * Renders the widget cards in the gallery.
+     * @param {Array} widgetFiles - An array of file objects from the GitHub API.
+     */
+    function renderWidgets(widgetFiles) {
+        if (!widgetFiles || widgetFiles.length === 0) {
+            gallery.innerHTML = `<div class="loading-message">No widgets found in the '${CONFIG.widgetsFolder}' directory.</div>`;
+            return;
+        }
+
+        gallery.innerHTML = ""; // Clear the loading message
+
+        widgetFiles.forEach(file => {
+            const fileName = file.name;
+            const baseName = fileName.replace('.html', '');
+            const metadata = WIDGET_METADATA[baseName] || {};
+
+            const title = metadata.title || baseName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            const description = metadata.description || "No description provided.";
+            const gristUrl = metadata.gristUrl;
+            
+            // Construct paths
+            const widgetUrl = `${CONFIG.widgetsFolder}/${fileName}`;
+            const imageUrlPng = `${CONFIG.imagesFolder}/${baseName}.png`;
+            const imageUrlJpg = `${CONFIG.imagesFolder}/${baseName}.jpg`;
+
+            const card = document.createElement('div');
+            card.className = 'widget-card';
+            card.innerHTML = `
+                <div class="card-image-wrapper">
+                    <img class="card-image" 
+                         src="${imageUrlPng}" 
+                         alt="Screenshot of ${title}" 
+                         onerror="this.onerror=null; this.src='${imageUrlJpg}';"
+                         onload="this.onerror=() => { this.onerror=null; this.src='${FALLBACK_IMG_URL}'; };">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${title}</h3>
+                    <p class="card-desc">${description}</p>
+                    <div class="card-buttons">
+                        <a href="${widgetUrl}" target="_blank" class="card-link secondary">
+                            <i class="fas fa-eye"></i> View Widget
+                        </a>
+                        ${gristUrl ? `
+                        <a href="${gristUrl}" target="_blank" class="card-link primary">
+                            <i class="fas fa-table-cells"></i> Open in Grist
+                        </a>` : ''}
+                    </div>
+                </div>
+            `;
+            gallery.appendChild(card);
+        });
+    }
+    
+    /**
+     * Initializes the view toggle buttons for changing column layout.
+     */
+    function initViewToggle() {
+        const toggleButtons = document.querySelectorAll('.view-toggle button');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                toggleButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const cols = button.dataset.cols;
+                gallery.className = `widget-gallery cols-${cols}`;
+            });
+        });
+    }
+
+    /**
+     * Initializes the live search functionality.
+     */
+    function initSearch() {
+        const searchInput = document.getElementById('widgetSearch');
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                const cards = document.querySelectorAll('.widget-card');
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
+                    const description = card.querySelector('.card-desc')?.textContent.toLowerCase() || '';
+                    const isVisible = title.includes(searchTerm) || description.includes(searchTerm);
+                    card.style.display = isVisible ? 'flex' : 'none';
+                });
+            }, 250); // Debounce search input
+        });
+    }
+
+    // --- Start the application ---
+    fetchWidgets();
+    initViewToggle();
+    initSearch();
+});
+</script>
+
+</body>
+</html>
